@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy_Projectile : MonoBehaviour
+{
+    public float Speed = 5f;
+    public float LifeTime = 3f;
+    public int Damage = 8;
+    public float PlayerKnockback = 0.5f;
+
+
+    private void Start() {
+
+        GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x, transform.up.y) * Speed;
+
+        Invoke("DestroyBullet", LifeTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+
+        
+
+        if (collision.gameObject.tag == "Player") {
+
+            
+
+            Vector3 dir3 = (collision.gameObject.transform.position - transform.position).normalized;
+            Vector2 dir = new Vector2(dir3.x, dir3.y);
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(dir * PlayerKnockback);
+            collision.gameObject.GetComponent<PlayerController>().Damage(Damage);
+
+
+            DestroyBullet();
+
+        } else if (collision.gameObject.tag == "Planet") {
+            DestroyBullet();
+        }
+    }
+
+    private void DestroyBullet() {
+        Destroy(gameObject);
+    }
+}
