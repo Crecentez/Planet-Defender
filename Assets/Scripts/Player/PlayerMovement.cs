@@ -9,6 +9,23 @@ public class PlayerMovement : MonoBehaviour
     #region Variables Classes
 
     [Serializable]
+    public class GunConnection {
+        public Vector2 Position = Vector2.zero;
+        public float Rotation = 0f;
+        public Vector2 Attenuation = Vector2.zero;
+        public float AttenuationRotation = 0f;
+
+        public GameObject GunPrefab;
+        [HideInInspector]
+        public Gun Gun;
+    }
+
+    [Serializable]
+    public class GunClass {
+        public List<GunConnection> Guns = new List<GunConnection>();
+    }
+
+    [Serializable]
     public class ControlsClass {
 
         public KeyCode ForwardGas = KeyCode.W;
@@ -38,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
         public float Acceleration = 1f;
         public float BoostAcceleration = 3f;
 
+
+        [Header("Knockback")]
+        public float PlanetKnockback = 1f;
+
     }
 
     
@@ -50,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     public ControlsClass Controls = new ControlsClass();
     public MovementClass Movement = new MovementClass();
+    public GunClass Guns = new GunClass();
 
     [Header("Test Variables")]
 
@@ -66,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
         Movement.Boost = Movement.MaxBoost;
         rb = GetComponent<Rigidbody2D>();
         pc = GetComponent<PlayerController>();
+
+        AttatchGuns();
     }
 
     private void Update()
@@ -79,23 +103,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void updateFiring() 
     {
-        
-        if (LeftGun.BulletPrefab == RightGun.BulletPrefab) {
-            if (Input.GetMouseButton(0) || Input.GetMouseButton(1)) {
-                LeftGun.Fire();
-                RightGun.Fire();
-            }
-        } else {
-            if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0)) {
 
-                LeftGun.Fire();
-            }
-            if (Input.GetMouseButton(1)) {
-
-                RightGun.Fire();
+            for (int i = 0; i < Guns.Guns.Count; i++) {
+                Gun gun = Guns.Guns[i].Gun;
+                if (gun != null) {
+                    gun.Fire();
+                }
             }
         }
-        
+        //if (LeftGun.BulletPrefab == RightGun.BulletPrefab) {
+        //    if (Input.GetMouseButton(0) || Input.GetMouseButton(1)) {
+        //        LeftGun.Fire();
+        //        RightGun.Fire();
+        //    }
+        //} else {
+        //    if (Input.GetMouseButton(0)) {
+
+        //        LeftGun.Fire();
+        //    }
+        //    if (Input.GetMouseButton(1)) {
+
+        //        RightGun.Fire();
+        //    }
+        //}
+
 
     }
 
@@ -131,12 +163,36 @@ public class PlayerMovement : MonoBehaviour
 
     private int getXAxisInput()
     {
-
         int x = 0;
-
         if (Input.GetKey(Controls.SteerLeft)) { x += 1; }
         if (Input.GetKey(Controls.SteerRight)) { x -= 1; }
-
         return x;
+    }
+
+    private void AttatchGuns() {
+        for (int i = 0; i < Guns.Guns.Count; i++) {
+            GunConnection gunConnection = Guns.Guns[i];
+            GameObject GO_gun = Instantiate(gunConnection.GunPrefab, transform);
+            gunConnection.Gun = GO_gun.GetComponent<Gun>();
+            GO_gun.transform.position = transform.position + (transform.up * gunConnection.Position.y) + (transform.right * gunConnection.Position.x);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Planet") {
+            Debug.Log("Hit Planet");
+            Vector3 dir3 = (collision.gameObject.transform.position - transform.position).normalized;
+            Vector2 dir = new Vector2(dir3.x, dir3.y);
+            GetComponent<Rigidbody2D>().velocity = dir * Movement.PlanetKnockback * -1;
+        }
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+
+        for (int i = 0; i < Guns.Guns.Count; i++) {
+            GunConnection gunConnection = Guns.Guns[i];
+            Gizmos.DrawWireSphere(transform.position + (transform.up * gunConnection.Position.y) + (transform.right * gunConnection.Position.x), 0.05f);
+        }
     }
 }

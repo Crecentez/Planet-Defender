@@ -14,9 +14,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public bool IsDead = false;
 
-    [SerializeField]
-    private float PlanetKnockback = 10f;
-
 
     private void Start() {
         Health = MaxHealth;
@@ -43,13 +40,5 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene(currentSceneName);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Planet") {
-            Debug.Log("Hit Planet");
-            Vector3 dir3 = (collision.gameObject.transform.position - transform.position).normalized;
-            Vector2 dir = new Vector2(dir3.x, dir3.y);
-            GetComponent<Rigidbody2D>().velocity = dir * PlanetKnockback * -1;
-        }
-    }
 
 }
