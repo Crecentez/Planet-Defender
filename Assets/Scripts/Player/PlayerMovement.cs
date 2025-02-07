@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    
+
 
 
 
@@ -69,17 +69,22 @@ public class PlayerMovement : MonoBehaviour
 
     #region Variables
 
+    #region Public Variables
+
+
     public ControlsClass Controls = new ControlsClass();
     public MovementClass Movement = new MovementClass();
     public GunClass Guns = new GunClass();
 
-    [Header("Test Variables")]
+    #endregion
 
-    public Gun LeftGun;
-    public Gun RightGun;
+    #region Private Variables
+
 
     private Rigidbody2D rb;
     private PlayerController pc;
+
+    #endregion
 
     #endregion
 
@@ -112,21 +117,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        //if (LeftGun.BulletPrefab == RightGun.BulletPrefab) {
-        //    if (Input.GetMouseButton(0) || Input.GetMouseButton(1)) {
-        //        LeftGun.Fire();
-        //        RightGun.Fire();
-        //    }
-        //} else {
-        //    if (Input.GetMouseButton(0)) {
-
-        //        LeftGun.Fire();
-        //    }
-        //    if (Input.GetMouseButton(1)) {
-
-        //        RightGun.Fire();
-        //    }
-        //}
 
 
     }
