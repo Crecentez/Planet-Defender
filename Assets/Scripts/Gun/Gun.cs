@@ -17,7 +17,13 @@ public class Gun : MonoBehaviour {
     public void Fire() {
         if (CanFire) {
             CanFire = false;
+            
+
             GameObject b = Instantiate(BulletPrefab);
+
+            GameObject player = GameObject.FindWithTag("Player");
+            player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * b.GetComponent<Projectile>().PlayerKnockback * -1);
+
             b.transform.position = transform.position + (transform.up * offset.y) + (transform.right * offset.x);
             b.transform.rotation = transform.rotation;
 

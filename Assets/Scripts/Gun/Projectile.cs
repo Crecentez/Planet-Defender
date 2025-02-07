@@ -15,8 +15,8 @@ public class Projectile : MonoBehaviour
 
     private void Start() {
 
-        GameObject player = GameObject.FindWithTag("Player");
-        player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * PlayerKnockback * -1);
+        //GameObject player = GameObject.FindWithTag("Player");
+        //player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * PlayerKnockback * -1);
 
         GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x, transform.up.y) * Speed;
 
