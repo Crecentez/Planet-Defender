@@ -943,7 +943,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinSpawnRadius: 10.9
   MaxSpawnRadius: 13.58
-  SpawnRate: 2
+  SpawnRate: 0.1
   canSpawn: 1
   Enemies:
   - weight: 20
