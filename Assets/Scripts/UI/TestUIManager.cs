@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class TestUIManager : MonoBehaviour
 {
-    public GameObject TurrentPrefab;
+    public GameObject TurretPrefab;
 
-    public void Turrent() {
-        Debug.Log("Placing New Turrent");
+    public void Turret() {
+        Debug.Log("Placing New Turret");
 
         GameObject planetGO = GameObject.FindWithTag("Planet");
 
         Planet planet = planetGO.GetComponent<Planet>();
 
-        GameObject turrent = Instantiate(TurrentPrefab);
+        GameObject turret = Instantiate(TurretPrefab);
 
     }
 }

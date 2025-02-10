@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turrent : MonoBehaviour
+public class Turret : MonoBehaviour
 {
     [Serializable]
     public class Settings {
@@ -23,6 +23,7 @@ public class Turrent : MonoBehaviour
     private GameObject Targeting;
 
     public Planet planet;
+    public int orbitPosition = 1;
     public float OrbitSpeed = 1f;
     
 
@@ -46,11 +47,16 @@ public class Turrent : MonoBehaviour
         }
     }
 
+
     private void updatePosition() {
-        Vector3 posDir = Vector2.zero;
-        posDir.x = Mathf.Cos(OrbitSpeed * Time.fixedDeltaTime + (2 * MathF.PI) / planet.TotalOrbits) * planet.TurrentOrbitRadius;
-        posDir.y = Mathf.Sin(OrbitSpeed * Time.fixedDeltaTime + (2 * MathF.PI) / planet.TotalOrbits) * planet.TurrentOrbitRadius;
-        transform.position = posDir + planet.gameObject.transform.position;
+        if (planet != null) {
+            Vector3 posDir = Vector2.zero;
+            float orbitRadius = planet.OrbitSettings.AddedOrbitDistance * ((orbitPosition - (orbitPosition % planet.OrbitSettings.MaxPerRow)) / planet.OrbitSettings.MaxPerRow) + planet.OrbitSettings.StartOrbitRadius;
+            posDir.x = Mathf.Cos(OrbitSpeed * Time.time + (2 * MathF.PI * (orbitPosition % planet.OrbitSettings.MaxPerRow) / planet.Turrets.Count)) * orbitRadius;
+            posDir.y = Mathf.Sin(OrbitSpeed * Time.time + (2 * MathF.PI * (orbitPosition % planet.OrbitSettings.MaxPerRow) / planet.Turrets.Count)) * orbitRadius;
+            Debug.Log(posDir);
+            transform.position = posDir + planet.gameObject.transform.position;
+        }
     }
 
     private void fire() {
@@ -61,7 +67,7 @@ public class Turrent : MonoBehaviour
                 b.transform.position = transform.position + (transform.up * settings.Offset.y) + (transform.right * settings.Offset.x);
                 //b.transform.rotation = transform.rotation;
                 Rigidbody2D trb = Targeting.GetComponent<Rigidbody2D>();
-                Vector3 targ = Targeting.transform.position + (new Vector3(trb.velocity.x, trb.velocity.y, 0))// /(speedOfBullet * Distance * adjustVariable);
+                Vector3 targ = Targeting.transform.position + (new Vector3(trb.velocity.x, trb.velocity.y, 0)); // /(speedOfBullet * Distance * adjustVariable);
                 targ.z = 0f;
                 targ.x = targ.x - b.transform.position.x;
                 targ.y = targ.y - b.transform.position.y;
@@ -77,28 +83,34 @@ public class Turrent : MonoBehaviour
     private GameObject getClosestEnemy() {
         GameObject closestEnemy = null;
         float closestDistance = settings.ShootRadius + 1f;
-        foreach (GameObject go in enemiesInRadius) {
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy")) {
             if ((go.transform.position - transform.position).magnitude < closestDistance) {
                 closestEnemy = go;
                 closestDistance = (go.transform.position - transform.position).magnitude;
             }
         }
+        //foreach (GameObject go in enemiesInRadius) {
+        //    if ((go.transform.position - transform.position).magnitude < closestDistance) {
+        //        closestEnemy = go;
+        //        closestDistance = (go.transform.position - transform.position).magnitude;
+        //    }
+        //}
         return closestEnemy;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    //private void OnTriggerEnter2D(Collider2D collision) {
         
-        if (collision.gameObject.GetComponent<Enemy>()) {
+    //    if (collision.gameObject.GetComponent<Enemy>()) {
             
-            enemiesInRadius.Add(collision.gameObject);
-        }
-    }
+    //        enemiesInRadius.Add(collision.gameObject);
+    //    }
+    //}
 
-    private void OnTriggerExit2D(Collider2D collision) {
-            if (collision.gameObject.GetComponent<Enemy>() && enemiesInRadius.Contains(collision.gameObject)) {
-                enemiesInRadius.Remove(collision.gameObject);
-            }
-        }
+    //private void OnTriggerExit2D(Collider2D collision) {
+    //    if (collision.gameObject.GetComponent<Enemy>() && enemiesInRadius.Contains(collision.gameObject)) {
+    //        enemiesInRadius.Remove(collision.gameObject);
+    //    }
+    //}
 
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;

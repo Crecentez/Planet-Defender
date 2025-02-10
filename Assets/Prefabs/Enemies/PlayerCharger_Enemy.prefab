@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5209861384935945797}
   m_Layer: 6
   m_Name: PlayerCharger_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,13 +208,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 8
-  Knockback: 50
-  MaxSpeed: 1.5
-  Acceleration: 5
-  RotSpeed: 200
-  SightRadius: 4
+  Settings:
+    MaxSpeed: 1
+    Acceleration: 1
+    RotSpeed: 150
+    PlayerKnockback: 3
+    SelfKnockback: 1
+    PlanetDamage: 5
+    PlayerDamage: 10
+    SightRadius: 5
   ChasePlayer: 1
-  Damage: 5
 --- !u!1 &4352704648909081561
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
             DestroyBullet();
             e.Damage(Damage);
 
-        } else if (collision.gameObject.tag == "Planet") {
+        } else if (collision.gameObject.CompareTag("Planet")) {
             DestroyBullet();
         }
     }

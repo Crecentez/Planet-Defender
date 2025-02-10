@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7707105634917653104}
   m_Layer: 6
   m_Name: Shooter_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,7 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 20
-  Knockback: 3
   MaxSpeed: 1
   Acceleration: 2
   RotSpeed: 150

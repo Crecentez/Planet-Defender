@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2719721491973748493}
   - component: {fileID: 1788382665770748392}
   m_Layer: 0
-  m_Name: Turrent
-  m_TagString: Untagged
+  m_Name: Turret
+  m_TagString: Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,12 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    ShootRadius: 5
-    FireRate: 1
+    ShootRadius: 6
+    FireRate: 0.7
     Offset: {x: 0, y: 0}
     TurnSpeed: 400
   BulletPrefab: {fileID: 7917688255547569854, guid: f23af69d66972654ebcbe27673b1efc1, type: 3}
   planet: {fileID: 0}
+  orbitPosition: 1
+  OrbitSpeed: 0.5
 --- !u!58 &1788382665770748392
 CircleCollider2D:
   m_ObjectHideFlags: 0

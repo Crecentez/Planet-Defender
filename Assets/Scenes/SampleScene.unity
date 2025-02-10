@@ -160,7 +160,7 @@ MonoBehaviour:
     SteerLeft: 97
     SteerRight: 100
     Boost: 304
-    Fire: 323
+    Fire: 107
   Movement:
     MaxSpeed: 5
     SteerSpeed: 100
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553ef1acb8b9a8347b9ab99cc85ab8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 30
+  MaxHealth: 10000
   IsDead: 0
 --- !u!58 &91033153
 CircleCollider2D:
@@ -687,9 +687,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 1000
   Health: 1
-  TotalOrbits: 1
-  TurrentOrbitRadius: 2.5
-  Turrents: []
+  OrbitSettings:
+    StartOrbitRadius: 1.5
+    AddedOrbitDistance: 0.3
+    MaxPerRow: 10
+    MaxTurrets: 60
+  Turrets: []
+  PreSpawnTurrets:
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+  - {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
 --- !u!1 &622808340
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,9 +955,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a78fa81b1e128394a88ec7afb5a65e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinSpawnRadius: 10.9
-  MaxSpawnRadius: 13.58
-  SpawnRate: 0.1
+  MinSpawnRadius: 11
+  MaxSpawnRadius: 14.5
+  SpawnRate: 1.5
   canSpawn: 1
   Enemies:
   - weight: 20
@@ -1429,67 +1443,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1564572946494853625
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.06018298
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 618741094291562893, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2719721491973748493, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: planet
-      value: 
-      objectReference: {fileID: 224609617}
-    - target: {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
-      propertyPath: m_Name
-      value: Turrent
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1501,4 +1454,3 @@ SceneRoots:
   - {fileID: 91033150}
   - {fileID: 1386047020}
   - {fileID: 1965443239}
-  - {fileID: 1564572946494853625}

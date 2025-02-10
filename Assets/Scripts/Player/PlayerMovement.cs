@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void updateFiring() 
     {
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) || Input.GetKey(Controls.Fire)) {
 
             for (int i = 0; i < Guns.Guns.Count; i++) {
                 Gun gun = Guns.Guns[i].Gun;

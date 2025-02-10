@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8475357852023148192}
   m_Layer: 6
   m_Name: Tank_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,13 +208,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 20
-  Knockback: 5
-  MaxSpeed: 0.4
-  Acceleration: 1
-  RotSpeed: 100
-  SightRadius: 0
+  Settings:
+    MaxSpeed: 1
+    Acceleration: 1
+    RotSpeed: 150
+    PlayerKnockback: 3
+    SelfKnockback: 1
+    PlanetDamage: 5
+    PlayerDamage: 10
+    SightRadius: 5
   ChasePlayer: 0
-  Damage: 8
 --- !u!1 &4352704648909081561
 GameObject:
   m_ObjectHideFlags: 0
