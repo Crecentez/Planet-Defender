@@ -54,7 +54,7 @@ public class Planet : MonoBehaviour
             Turret t = Turrets[i];
 
             if (t != null && t.planet == this) {
-                t.orbitPosition = i + 1;
+                t.orbitPosition = i;
             }
         }
     }

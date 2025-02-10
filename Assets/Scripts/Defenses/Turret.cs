@@ -53,8 +53,13 @@ public class Turret : MonoBehaviour
             Vector3 posDir = Vector2.zero;
             float ring = ((orbitPosition - (orbitPosition % planet.OrbitSettings.MaxPerRow)) / planet.OrbitSettings.MaxPerRow);
             float orbitRadius = planet.OrbitSettings.AddedOrbitDistance * (ring - 1) + planet.OrbitSettings.StartOrbitRadius;
-            posDir.x = Mathf.Cos(OrbitSpeed * Time.time + (2 * MathF.PI * (orbitPosition % planet.OrbitSettings.MaxPerRow) / planet.OrbitSettings.MaxPerRow)) * orbitRadius;
-            posDir.y = Mathf.Sin(OrbitSpeed * Time.time + (2 * MathF.PI * (orbitPosition % planet.OrbitSettings.MaxPerRow) / planet.OrbitSettings.MaxPerRow)) * orbitRadius;
+            float offset = 2 * MathF.PI * (orbitPosition % planet.OrbitSettings.MaxPerRow);
+            if (ring % 2 == 0) {
+                offset += MathF.PI;
+            }
+
+            posDir.x = Mathf.Cos(OrbitSpeed * Time.time + offset / planet.OrbitSettings.MaxPerRow) * orbitRadius;
+            posDir.y = Mathf.Sin(OrbitSpeed * Time.time + offset / planet.OrbitSettings.MaxPerRow) * orbitRadius;
             Debug.Log(posDir);
             transform.position = posDir + planet.gameObject.transform.position;
         }
