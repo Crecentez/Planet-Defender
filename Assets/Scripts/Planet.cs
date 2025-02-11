@@ -31,19 +31,7 @@ public class Planet : MonoBehaviour
         foreach (GameObject p in PreSpawnTurrets) {
             GameObject o = Instantiate(p);
             Turret t = o.GetComponent<Turret>();
-            t.planet = this;
-            Turrets.Add(t);
-        }
-        foreach (GameObject p in PreSpawnTurrets) {
-            GameObject o = Instantiate(p);
-            Turret t = o.GetComponent<Turret>();
-            t.planet = this;
-            Turrets.Add(t);
-        }
-        foreach (GameObject p in PreSpawnTurrets) {
-            GameObject o = Instantiate(p);
-            Turret t = o.GetComponent<Turret>();
-            t.planet = this;
+            t.Orbit.planet = this;
             Turrets.Add(t);
         }
         updateTurretPosition();
@@ -53,8 +41,8 @@ public class Planet : MonoBehaviour
         for(int i = 0; i < Turrets.Count; i++) {
             Turret t = Turrets[i];
 
-            if (t != null && t.planet == this) {
-                t.orbitPosition = i;
+            if (t != null && t.Orbit.planet == this) {
+                t.Orbit.orbitPosition = i;
             }
         }
     }

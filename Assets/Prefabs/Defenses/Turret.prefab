@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 618741094291562893}
   - component: {fileID: 2719721491973748493}
+  - component: {fileID: 6896443291024195780}
   - component: {fileID: 1788382665770748392}
   m_Layer: 0
   m_Name: Turret
@@ -46,15 +47,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d751d1172342c6e42b76726758f63e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Orbit:
+    planet: {fileID: 0}
+    orbitPosition: 1
+    OrbitSpeed: 0.5
+  maxHealth: 100
+  IsWorking: 1
+--- !u!114 &6896443291024195780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3339097972596038305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e895bcbfcdeaa8541b527d4504b4bbca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   settings:
     ShootRadius: 6
-    FireRate: 0.7
+    FireRate: 1
     Offset: {x: 0, y: 0}
     TurnSpeed: 400
-  BulletPrefab: {fileID: 7917688255547569854, guid: f23af69d66972654ebcbe27673b1efc1, type: 3}
-  planet: {fileID: 0}
-  orbitPosition: 1
-  OrbitSpeed: 0.5
+    BulletPrefab: {fileID: 7917688255547569854, guid: f23af69d66972654ebcbe27673b1efc1, type: 3}
 --- !u!58 &1788382665770748392
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -89,7 +105,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.1
 --- !u!1 &3500933385196469451
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +133,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7661884039880608347}
@@ -224,7 +240,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.690566, g: 0.690566, b: 0.690566, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_LightVolumeIntensity: 0.13
   m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 00000000

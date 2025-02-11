@@ -690,7 +690,7 @@ MonoBehaviour:
   OrbitSettings:
     StartOrbitRadius: 1.5
     AddedOrbitDistance: 0.3
-    MaxPerRow: 10
+    MaxPerRow: 15
     MaxTurrets: 60
   Turrets: []
   PreSpawnTurrets:

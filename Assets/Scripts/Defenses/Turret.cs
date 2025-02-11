@@ -5,121 +5,65 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+
     [Serializable]
-    public class Settings {
-        public float ShootRadius = 8f;
-        public float FireRate = 1f;
-        public Vector2 Offset = Vector2.zero;
-        public float TurnSpeed = 100f;
+    public class Orbit_Class {
+        public Planet planet;
+        public int orbitPosition = 1;
+        public float OrbitSpeed = 1f;
     }
 
-    public Settings settings;
-    public GameObject BulletPrefab;
 
-    private List<GameObject> enemiesInRadius = new List<GameObject>();
 
-    private CircleCollider2D circleCollider;
+    public Orbit_Class Orbit = new Orbit_Class();
 
-    private GameObject Targeting;
+    [Header("Health")]
+    [SerializeField]
+    private int maxHealth = 100;
+    private int health = 0;
 
-    public Planet planet;
-    public int orbitPosition = 1;
-    public float OrbitSpeed = 1f;
-    
+    [SerializeField]
+    private bool IsWorking = true;
 
     private void Start() {
-        circleCollider = GetComponent<CircleCollider2D>();
-        circleCollider.radius = settings.ShootRadius;
-
-        fire();
+        health = maxHealth;
     }
 
     private void FixedUpdate() {
-
+        
         updatePosition();
-
-        if (Targeting != null) {
-            float angle = Mathf.Atan2(Targeting.transform.position.y - transform.position.y, Targeting.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
-            Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, settings.TurnSpeed * Time.fixedDeltaTime);
-        } else {
-            Targeting = getClosestEnemy();
-        }
     }
 
+    private int damage(int damage) {
+        int damageDelt = damage + (health < damage ? health - damage : 0);
+        health = Mathf.Max(health - damage, 0);
+        return damageDelt;
+    }
+
+    private bool getIsWorking() {
+        return IsWorking;
+    }
 
     private void updatePosition() {
-        if (planet != null) {
+        if (Orbit.planet != null) {
             Vector3 posDir = Vector2.zero;
-            float ring = ((orbitPosition - (orbitPosition % planet.OrbitSettings.MaxPerRow)) / planet.OrbitSettings.MaxPerRow);
-            float orbitRadius = planet.OrbitSettings.AddedOrbitDistance * (ring - 1) + planet.OrbitSettings.StartOrbitRadius;
-            float offset = 2 * MathF.PI * (orbitPosition % planet.OrbitSettings.MaxPerRow);
+            float ring = ((Orbit.orbitPosition - (Orbit.orbitPosition % Orbit.planet.OrbitSettings.MaxPerRow)) / Orbit.planet.OrbitSettings.MaxPerRow);
+            float orbitRadius = Orbit.planet.OrbitSettings.AddedOrbitDistance * (ring - 1) + Orbit.planet.OrbitSettings.StartOrbitRadius;
+            float offset = 2 * MathF.PI * (Orbit.orbitPosition % Orbit.planet.OrbitSettings.MaxPerRow);
             if (ring % 2 == 0) {
                 offset += MathF.PI;
             }
 
-            posDir.x = Mathf.Cos(OrbitSpeed * Time.time + offset / planet.OrbitSettings.MaxPerRow) * orbitRadius;
-            posDir.y = Mathf.Sin(OrbitSpeed * Time.time + offset / planet.OrbitSettings.MaxPerRow) * orbitRadius;
+            posDir.x = Mathf.Cos(Orbit.OrbitSpeed * Time.time + offset / Orbit.planet.OrbitSettings.MaxPerRow) * orbitRadius;
+            posDir.y = Mathf.Sin(Orbit.OrbitSpeed * Time.time + offset / Orbit.planet.OrbitSettings.MaxPerRow) * orbitRadius;
             Debug.Log(posDir);
-            transform.position = posDir + planet.gameObject.transform.position;
+            transform.position = posDir + Orbit.planet.gameObject.transform.position;
         }
     }
 
-    private void fire() {
-        if (circleCollider != null) {
-            //GameObject closestEnemy = getClosestEnemy();
-            if (Targeting != null) {
-                GameObject b = Instantiate(BulletPrefab);
-                b.transform.position = transform.position + (transform.up * settings.Offset.y) + (transform.right * settings.Offset.x);
-                //b.transform.rotation = transform.rotation;
-                Rigidbody2D trb = Targeting.GetComponent<Rigidbody2D>();
-                Vector3 targ = Targeting.transform.position + (new Vector3(trb.velocity.x, trb.velocity.y, 0)); // /(speedOfBullet * Distance * adjustVariable);
-                targ.z = 0f;
-                targ.x = targ.x - b.transform.position.x;
-                targ.y = targ.y - b.transform.position.y;
-                float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
-                b.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+    
 
-            }
-        }
-        Targeting = getClosestEnemy();
-        Invoke("fire", settings.FireRate);
-    }
+    
 
-    private GameObject getClosestEnemy() {
-        GameObject closestEnemy = null;
-        float closestDistance = settings.ShootRadius + 1f;
-        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy")) {
-            if ((go.transform.position - transform.position).magnitude < closestDistance) {
-                closestEnemy = go;
-                closestDistance = (go.transform.position - transform.position).magnitude;
-            }
-        }
-        //foreach (GameObject go in enemiesInRadius) {
-        //    if ((go.transform.position - transform.position).magnitude < closestDistance) {
-        //        closestEnemy = go;
-        //        closestDistance = (go.transform.position - transform.position).magnitude;
-        //    }
-        //}
-        return closestEnemy;
-    }
-
-    //private void OnTriggerEnter2D(Collider2D collision) {
-        
-    //    if (collision.gameObject.GetComponent<Enemy>()) {
-            
-    //        enemiesInRadius.Add(collision.gameObject);
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision) {
-    //    if (collision.gameObject.GetComponent<Enemy>() && enemiesInRadius.Contains(collision.gameObject)) {
-    //        enemiesInRadius.Remove(collision.gameObject);
-    //    }
-    //}
-
-    private void OnDrawGizmosSelected() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, settings.ShootRadius);
-    }
+    
 }

@@ -31,8 +31,8 @@ public class Projectile : MonoBehaviour
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             rb.AddForce(GetComponent<Rigidbody2D>().velocity.normalized * EnemyKnockback);
 
-            DestroyBullet();
             e.Damage(Damage);
+            DestroyBullet();
 
         } else if (collision.gameObject.CompareTag("Planet")) {
             DestroyBullet();

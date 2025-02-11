@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
 
         Health -= amount;
 
-        if (Health < 0) Kill();
+        if (Health < 0) { Kill(); }
 
     }
 
