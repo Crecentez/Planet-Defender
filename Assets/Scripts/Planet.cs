@@ -34,6 +34,18 @@ public class Planet : MonoBehaviour
             t.Orbit.planet = this;
             Turrets.Add(t);
         }
+        foreach (GameObject p in PreSpawnTurrets) {
+            GameObject o = Instantiate(p);
+            Turret t = o.GetComponent<Turret>();
+            t.Orbit.planet = this;
+            Turrets.Add(t);
+        }
+        foreach (GameObject p in PreSpawnTurrets) {
+            GameObject o = Instantiate(p);
+            Turret t = o.GetComponent<Turret>();
+            t.Orbit.planet = this;
+            Turrets.Add(t);
+        }
         updateTurretPosition();
     }
 
