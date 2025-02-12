@@ -291,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SafeZone: {x: 60, y: 30}
   LethalBorder: {x: 70, y: 40}
+  showGizmos: 1
 --- !u!1 &122876413
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &171586005
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -817,6 +818,7 @@ GameObject:
   - component: {fileID: 1223605095}
   - component: {fileID: 1223605094}
   - component: {fileID: 1223605097}
+  - component: {fileID: 1223605099}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -867,7 +869,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 25.824545
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -892,7 +894,7 @@ Transform:
   m_GameObject: {fileID: 1223605093}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 6.5086093, y: -10.588479, z: -61.786095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -956,6 +958,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dampTime: 0.15
   target: {fileID: 91033150}
+  maxView: {x: 45, y: 30}
+  cam: {fileID: 1223605095}
+--- !u!114 &1223605099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223605093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1386047018
 GameObject:
   m_ObjectHideFlags: 0
