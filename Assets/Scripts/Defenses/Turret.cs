@@ -49,13 +49,21 @@ public class Turret : MonoBehaviour
             Vector3 posDir = Vector2.zero;
             float ring = ((Orbit.orbitPosition - (Orbit.orbitPosition % Orbit.planet.OrbitSettings.MaxPerRow)) / Orbit.planet.OrbitSettings.MaxPerRow);
             float orbitRadius = Orbit.planet.OrbitSettings.AddedOrbitDistance * (ring - 1) + Orbit.planet.OrbitSettings.StartOrbitRadius;
-            float offset = 2 * MathF.PI * (Orbit.orbitPosition % Orbit.planet.OrbitSettings.MaxPerRow);
+
+            int totalTurrets = Orbit.planet.Turrets.Count;
+
+            int currentRow = Orbit.orbitPosition - (Orbit.orbitPosition % Orbit.planet.OrbitSettings.MaxPerRow);
+            int amountOnRow = Orbit.planet.OrbitSettings.MaxPerRow;
+            if (totalTurrets - currentRow < Orbit.planet.OrbitSettings.MaxPerRow) { amountOnRow = totalTurrets - currentRow; }
+
+            //float offset = 2 * MathF.PI * (Orbit.orbitPosition % Orbit.planet.OrbitSettings.MaxPerRow);
+            float offset = 2 * Mathf.PI * (Orbit.orbitPosition % Orbit.planet.OrbitSettings.MaxPerRow) / amountOnRow;
             if (ring % 2 == 0) {
                 offset += MathF.PI;
             }
 
-            posDir.x = Mathf.Cos(Orbit.OrbitSpeed * Time.time + offset / Orbit.planet.OrbitSettings.MaxPerRow) * orbitRadius;
-            posDir.y = Mathf.Sin(Orbit.OrbitSpeed * Time.time + offset / Orbit.planet.OrbitSettings.MaxPerRow) * orbitRadius;
+            posDir.x = Mathf.Cos(Orbit.OrbitSpeed * Time.time + offset) * orbitRadius;
+            posDir.y = Mathf.Sin(Orbit.OrbitSpeed * Time.time + offset ) * orbitRadius;
             Debug.Log(posDir);
             transform.position = posDir + Orbit.planet.gameObject.transform.position;
         }

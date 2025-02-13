@@ -30,15 +30,13 @@ public class Enemy_Projectile : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(dir * PlayerKnockback);
             collision.gameObject.GetComponent<PlayerController>().Damage(Damage);
 
-
-            DestroyBullet();
+            Destroy(gameObject);
 
         } else if (collision.gameObject.tag == "Planet") {
-            DestroyBullet();
+            Planet planet = collision.gameObject.GetComponent<Planet>();
+            planet.damage(Damage);
+            Destroy(gameObject);
         }
     }
 
-    private void DestroyBullet() {
-        Destroy(gameObject);
-    }
 }

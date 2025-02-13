@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Planet : MonoBehaviour
 {
@@ -21,32 +22,35 @@ public class Planet : MonoBehaviour
 
     public List<Turret> Turrets = new List<Turret>();
 
-    [Header("Testing")]
-    [SerializeField]
-    private List<GameObject> PreSpawnTurrets = new List<GameObject>();
+
+    
 
     private void Start() {
         Health = MaxHealth;
+    }
 
-        foreach (GameObject p in PreSpawnTurrets) {
-            GameObject o = Instantiate(p);
-            Turret t = o.GetComponent<Turret>();
-            t.Orbit.planet = this;
-            Turrets.Add(t);
-        }
-        foreach (GameObject p in PreSpawnTurrets) {
-            GameObject o = Instantiate(p);
-            Turret t = o.GetComponent<Turret>();
-            t.Orbit.planet = this;
-            Turrets.Add(t);
-        }
-        foreach (GameObject p in PreSpawnTurrets) {
-            GameObject o = Instantiate(p);
-            Turret t = o.GetComponent<Turret>();
-            t.Orbit.planet = this;
-            Turrets.Add(t);
-        }
+    public void addTurrent(GameObject TurrentPrefab) {
+        GameObject o = Instantiate(TurrentPrefab);
+        Turret t = o.GetComponent<Turret>();
+        t.Orbit.planet = this;
+        Turrets.Add(t);
         updateTurretPosition();
+    }
+
+    public void damage(int amount) {
+        Health -= amount;
+        if (Health < 0) {
+            blowUp();
+        }
+    }
+
+    public void blowUp() {
+        Invoke("RestartGame", 3);
+    }
+
+    public void RestartGame() {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 
     private void updateTurretPosition() {
