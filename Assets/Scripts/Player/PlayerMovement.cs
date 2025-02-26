@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Planet") {
-            Debug.Log("Hit Planet");
+            //Debug.Log("Hit Planet");
             Vector3 dir3 = (collision.gameObject.transform.position - transform.position).normalized;
             Vector2 dir = new Vector2(dir3.x, dir3.y);
             GetComponent<Rigidbody2D>().velocity = dir * Movement.PlanetKnockback * -1;

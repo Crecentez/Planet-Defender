@@ -1568,6 +1568,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1386047020}
   - component: {fileID: 1386047019}
+  - component: {fileID: 1386047021}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -1582,7 +1583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386047018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a78fa81b1e128394a88ec7afb5a65e39, type: 3}
   m_Name: 
@@ -1617,6 +1618,43 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1386047021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386047018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea56db15c343324282570fb36e27ef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - scaling:
+      healthScale: 1
+      playerDamageScale: 1
+      planetDamageScale: 1
+    spawnTable:
+    - weight: 20
+      enemy: {fileID: 3289616820698895754, guid: 6a81ec8fc10b57d4ab018b504057bd5d, type: 3}
+    spawnIntervals: 5
+    spawnSpeed: 1
+    intervalSpawnAmount: 2
+  - scaling:
+      healthScale: 1
+      playerDamageScale: 1
+      planetDamageScale: 1
+    spawnTable:
+    - weight: 20
+      enemy: {fileID: 3289616820698895754, guid: 6a81ec8fc10b57d4ab018b504057bd5d, type: 3}
+    spawnIntervals: 10
+    spawnSpeed: 1
+    intervalSpawnAmount: 2
+  wave: -1
+  MinSpawnRadius: 10
+  MaxSpawnRadius: 15
+  enemies: []
 --- !u!1 &1487631943
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
 
     protected int Health = 1;
 
+    public WaveHandler waveHandler;
+
     private void Start() {
         Health = MaxHealth;
     }
@@ -23,6 +25,10 @@ public class Enemy : MonoBehaviour
     }
 
     public void Kill() {
+        if (waveHandler != null) {
+            waveHandler.EnemyKilled(gameObject);
+        }
+
         Destroy(gameObject);
     }
 

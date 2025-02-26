@@ -64,7 +64,7 @@ public class Turret : MonoBehaviour
 
             posDir.x = Mathf.Cos(Orbit.OrbitSpeed * Time.time + offset) * orbitRadius;
             posDir.y = Mathf.Sin(Orbit.OrbitSpeed * Time.time + offset ) * orbitRadius;
-            Debug.Log(posDir);
+            //Debug.Log(posDir);
             transform.position = posDir + Orbit.planet.gameObject.transform.position;
         }
     }
