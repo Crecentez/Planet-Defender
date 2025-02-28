@@ -88,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    #region Private Functions
+
     private void Start()
     {
         Movement.Boost = Movement.MaxBoost;
@@ -117,10 +119,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
-
     }
-
 
     private void updateMovement()
     {
@@ -167,6 +166,16 @@ public class PlayerMovement : MonoBehaviour
             GO_gun.transform.position = transform.position + (transform.up * gunConnection.Position.y) + (transform.right * gunConnection.Position.x);
         }
     }
+
+#endregion
+
+    #region Upgrades
+
+    public void MultiplySpeed(float multi) {
+        Movement.MaxSpeed *= multi;
+    }
+
+    #endregion
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Planet") {

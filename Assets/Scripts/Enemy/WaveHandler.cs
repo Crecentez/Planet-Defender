@@ -42,6 +42,9 @@ public class WaveHandler : MonoBehaviour
         public Wave() { }
     }
 
+    [SerializeField]
+    private Upgrader upgrader;
+
     [Header("Waves")]
 
     [SerializeField]
@@ -57,8 +60,11 @@ public class WaveHandler : MonoBehaviour
     [SerializeField]
     private List<GameObject> enemies = new List<GameObject>();
 
+
+
     private void Start() {
-        Invoke("StartNextWave", 5f);
+        upgrader.OfferUpgrade(2);
+        //Invoke("StartNextWave", 5f);
     }
 
     private void StartNextWave() {
@@ -71,7 +77,10 @@ public class WaveHandler : MonoBehaviour
     public void CheckWaveStatus() {
         if (enemies.Count <= 0) {
             Debug.Log("Wave " + (wave + 1).ToString() + " Finished");
-            Invoke("StartNextWave", 3f);
+            if (upgrader != null) {
+                upgrader.OfferUpgrade(wave);
+            } 
+            //Invoke("StartNextWave", 3f);
         }
     }
 
