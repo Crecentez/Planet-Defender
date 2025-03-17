@@ -131,8 +131,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 91033150}
-  - component: {fileID: 91033155}
   - component: {fileID: 91033152}
+  - component: {fileID: 91033155}
   - component: {fileID: 91033149}
   - component: {fileID: 91033154}
   - component: {fileID: 91033151}
@@ -156,29 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31afc5fc7b03de54e9d4eb3a1a34f0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Movement:
-    MaxSpeed: 5
-    SteerSpeed: 100
-    BoostSpeed: 3
-    MaxBoost: 5000
-    Boost: 5000
-    Acceleration: 100
-    BoostAcceleration: 200
-    PlanetKnockback: 0.7
-  Guns:
-    Guns:
-    - Position: {x: -0.05, y: 0.04}
-      Rotation: 0
-      Attenuation: {x: 0, y: 0}
-      AttenuationRotation: 0
-      GunPrefab: {fileID: 2379431994671116765, guid: 30812ddff4c8de44db51b8f7651c1b1e, type: 3}
-      Gun: {fileID: 0}
-    - Position: {x: 0.05, y: 0.04}
-      Rotation: 0
-      Attenuation: {x: 0, y: 0}
-      AttenuationRotation: 0
-      GunPrefab: {fileID: 2379431994671116765, guid: 30812ddff4c8de44db51b8f7651c1b1e, type: 3}
-      Gun: {fileID: 0}
+  _input: {fileID: 91033155}
+  _controller: {fileID: 91033152}
+  _rb: {fileID: 0}
 --- !u!4 &91033150
 Transform:
   m_ObjectHideFlags: 0
@@ -234,8 +214,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553ef1acb8b9a8347b9ab99cc85ab8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
-  isDead: 0
+  _maxHealth: 30
+  _movement: {fileID: 91033149}
+  _input: {fileID: 91033155}
+  _border: {fileID: 91033154}
+  _camera: {fileID: 0}
 --- !u!58 &91033153
 CircleCollider2D:
   m_ObjectHideFlags: 0

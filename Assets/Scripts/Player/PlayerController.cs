@@ -1,27 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+
+
+public delegate void HealthUpdated(int old, int current);
 
 public class PlayerController : MonoBehaviour
 {
 
     #region Variables
 
-    [SerializeField]
-    private int maxHealth = 30;
+    // Private
+    [SerializeField] private int _maxHealth = 30;
+    public int health { get; private set; } = 1;
+    [SerializeField] public bool isDead { get; private set; } = false;
 
-    private int health = 1;
+    [SerializeField] private PlayerMovement _movement;
+    [SerializeField] private InputHandler _input;
+    [SerializeField] private AttatchementConnection _attatchement;
+    [SerializeField] private PlaySpaceBorder _border;
+    [SerializeField] private Camera _camera;
 
-    [SerializeField]
-    private bool isDead = false;
+    // Events
+    public event HealthUpdated OnHealthUpdated;
+    public event Action OnKilled;
+    public event Action<bool> OnPauseStateUpdated;
+
 
     #endregion
 
     #region Unity Methods
 
     private void Start() {
-        health = maxHealth;
+        health = _maxHealth;
+
     }
 
     #endregion
@@ -29,27 +44,33 @@ public class PlayerController : MonoBehaviour
     #region Methods
 
     public void Damage(int damage) {
+        int old = health;
         health -= damage;
+        
+        OnHealthUpdated?.Invoke(old, health);
 
-        if (health < 0) Kill();
+        if (health <= 0) Kill();
     }
 
     public void Kill() {
-        Debug.Log("Died");
-        health = maxHealth;
+        if (!isDead)
+            return;
 
-        //Destroy(gameObject);
+        health = 0;
         isDead = true;
 
-        Invoke("RestartGame", 3);
+        OnKilled?.Invoke();
+
+        StartCoroutine(RestartGame());
     }
 
-    public void RestartGame() {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
+    public IEnumerator RestartGame() {
+        yield return new WaitForSeconds(3f);
+        yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
-    public bool IsDead() { return isDead; }
+    public int MaxHealth() { return _maxHealth; }
+
 
     #endregion
 }

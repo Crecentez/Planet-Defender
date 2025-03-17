@@ -216,13 +216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471773119b742ca4eb0e60f735c2d2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDamageTypes: 0
+  canDamageTypes: 6
   settings:
     speed: 3
     lifeTime: 3
     damage: 3
-    enemyKnockback: 1
-    playerKnockback: 0.5
+    knockback: 1
 --- !u!114 &4149315944963262784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +229,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7917688255547569854}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40e8a7ab60c3bc24b8ac312d2cb18f5d, type: 3}
   m_Name: 

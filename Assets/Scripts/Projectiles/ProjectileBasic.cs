@@ -13,9 +13,7 @@ public class ProjectileBasic : Projectile
         public float speed = 5f;
         public float lifeTime = 3f;
         public int damage = 4;
-        //[ShowIf()]
-        public float enemyKnockback = 1f;
-        public float playerKnockback = 0.5f;
+        public float knockback = 1f;
 
         public Settings_Class() { }
     }
@@ -54,11 +52,11 @@ public class ProjectileBasic : Projectile
         GameObject gm = collision.gameObject;
         
         if (CanDamage(CanDamageTypes.Enemy) && gm.GetComponent<Enemy>()) {
-            ApplyKnockback(gm, settings.enemyKnockback * rb.velocity.normalized);
+            ApplyKnockback(gm, settings.knockback * rb.velocity.normalized);
             Damage(gm.GetComponent<Enemy>(), settings.damage);
             Destroy(gameObject);
         } else if (CanDamage(CanDamageTypes.Player) && gm.GetComponent<PlayerController>()) {
-            ApplyKnockback(gm, settings.playerKnockback * rb.velocity.normalized);
+            ApplyKnockback(gm, settings.knockback * rb.velocity.normalized);
             Damage(gm.GetComponent<PlayerController>(), settings.damage);
             Destroy(gameObject);
         } else if (CanDamage(CanDamageTypes.Planet) && gm.GetComponent<Planet>()) {

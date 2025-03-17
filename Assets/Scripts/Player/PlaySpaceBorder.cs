@@ -6,13 +6,18 @@ public class PlaySpaceBorder : MonoBehaviour
 {
 
     #region Variables
+    [SerializeField] private bool _showGizmos = false;
+    [SerializeField] private bool _showWarning = false;
 
-    // Public
-    public Vector2 SafeZone = Vector2.zero;
-    public Vector2 LethalBorder = Vector2.one;
-    public GameObject OutOfBoundsWarning;
+    [SerializeField] private Vector2 _safeZone = Vector2.zero;
+    [SerializeField] private Vector2 _lethalBorder = Vector2.one;
 
-    // Private
+
+    [SerializeField] private GameObject _OutOfBoundsWarning;
+    [SerializeField] private PlayerController _controller;
+
+
+
     [SerializeField]
     private bool showGizmos = false;
     [SerializeField]
