@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MonoBehaviour {
+public class Old_Gun : MonoBehaviour {
 
 
     [SerializeField]
@@ -14,6 +14,9 @@ public class Gun : MonoBehaviour {
 
     private bool CanFire = true;
 
+    private Planet planet;
+
+
     public void Fire() {
         if (CanFire) {
             CanFire = false;
@@ -22,7 +25,7 @@ public class Gun : MonoBehaviour {
             GameObject b = Instantiate(BulletPrefab);
 
             GameObject player = GameObject.FindWithTag("Player");
-            player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * b.GetComponent<Projectile>().PlayerKnockback * -1);
+            player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * b.GetComponent<Old_Projectile>().PlayerKnockback * -1);
 
             b.transform.position = transform.position + (transform.up * offset.y) + (transform.right * offset.x);
             b.transform.rotation = transform.rotation;

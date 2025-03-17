@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 8
   LifeTime: 3
-  Damage: 1
+  Damage: 10
   EnemyKnockback: 1
   PlayerKnockback: 1
 --- !u!50 &4299283002041543165

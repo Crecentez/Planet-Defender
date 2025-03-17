@@ -39,6 +39,7 @@ public class Shooter : Enemy
     private bool CanShoot = true;
 
     private void Start() {
+        Health = MaxHealth;
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
@@ -125,6 +126,11 @@ public class Shooter : Enemy
 
             float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
             b.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+
+            Enemy_Projectile ep = b.GetComponent<Enemy_Projectile>();
+            if (ep != null) {
+                ep.enemy = this;
+            }
 
             Invoke("ResetShot", FireRate);
 

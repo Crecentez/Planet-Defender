@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3742901868618126004}
-  - component: {fileID: 4515060775365932299}
+  - component: {fileID: 3671530697117680252}
   m_Layer: 0
   m_Name: BasicGun
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 719305695685121185}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4515060775365932299
+--- !u!114 &3671530697117680252
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,12 +42,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2379431994671116765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d502c8de729a1b4583ba34de6ab4e86, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b32ea6a0c8ff7446bdea458ce4d5b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 7917688255547569854, guid: af543bc13271bb3458cb67803efd6c62, type: 3}
-  FireRate: 0.1
-  offset: {x: 0, y: 0.15}
+  settings:
+    name: Basic Gun
+    fireRate: 0.5
+    offset: {x: 0, y: 10}
+    rotation: 0
+  BulletPrefab: {fileID: 0}
 --- !u!1 &5628950409534378839
 GameObject:
   m_ObjectHideFlags: 0

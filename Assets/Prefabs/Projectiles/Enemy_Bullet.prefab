@@ -176,6 +176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523827849077385798}
+  - component: {fileID: 2926000634509696322}
   - component: {fileID: 4149315944963262784}
   - component: {fileID: 4299283002041543165}
   - component: {fileID: 140214518078076218}
@@ -203,6 +204,25 @@ Transform:
   - {fileID: 8984279125050730930}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2926000634509696322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7917688255547569854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471773119b742ca4eb0e60f735c2d2fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDamageTypes: 0
+  settings:
+    speed: 3
+    lifeTime: 3
+    damage: 3
+    enemyKnockback: 1
+    playerKnockback: 0.5
 --- !u!114 &4149315944963262784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +239,7 @@ MonoBehaviour:
   LifeTime: 3
   Damage: 3
   PlayerKnockback: 0.5
+  enemy: {fileID: 0}
 --- !u!50 &4299283002041543165
 Rigidbody2D:
   serializedVersion: 4

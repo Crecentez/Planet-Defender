@@ -44,6 +44,7 @@ public class Charger : Enemy
     private Rigidbody2D rb;
 
     private void Start() {
+        Health = MaxHealth;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -56,13 +57,13 @@ public class Charger : Enemy
         if (collision.gameObject.tag == "Player") {
             DamagePlayer(Settings.PlayerDamage);
             ApplyKnockback(transform.position, collision.gameObject.GetComponent<Rigidbody2D>(), Settings.PlayerKnockback);
-            Damage(Settings.PlayerDamage);
+            Damage(Mathf.FloorToInt(Settings.PlayerDamage * playerDamageScale));
             ApplyKnockback(collision.gameObject.transform.position, rb, Settings.SelfKnockback);
         } else if (collision.gameObject.tag == "Planet") {
 
             // Damage Planet Here
 
-            Damage(Settings.PlanetDamage);
+            Damage(Mathf.FloorToInt(Settings.PlanetDamage * planetDamageScale));
             ApplyKnockback(collision.gameObject.transform.position, rb, Settings.SelfKnockback);
         }
     }

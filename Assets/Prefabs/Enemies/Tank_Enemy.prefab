@@ -207,10 +207,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b621edc876bfa9b4c9cbd2dc5eac3717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 20
+  MaxHealth: 200
+  waveHandler: {fileID: 0}
   Settings:
-    MaxSpeed: 1
-    Acceleration: 1
+    MaxSpeed: 0.5
+    Acceleration: 0.2
     RotSpeed: 150
     PlayerKnockback: 3
     SelfKnockback: 1

@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 20
+  waveHandler: {fileID: 0}
   MaxSpeed: 1
   Acceleration: 2
   RotSpeed: 150

@@ -9,6 +9,8 @@ public class Enemy_Projectile : MonoBehaviour
     public int Damage = 8;
     public float PlayerKnockback = 0.5f;
 
+    public Enemy enemy;
+
 
     private void Start() {
 
@@ -28,13 +30,13 @@ public class Enemy_Projectile : MonoBehaviour
             Vector3 dir3 = (collision.gameObject.transform.position - transform.position).normalized;
             Vector2 dir = new Vector2(dir3.x, dir3.y);
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(dir * PlayerKnockback);
-            collision.gameObject.GetComponent<PlayerController>().Damage(Damage);
+            collision.gameObject.GetComponent<PlayerController>().Damage(Mathf.FloorToInt(Damage * enemy.playerDamageScale));
 
             Destroy(gameObject);
 
         } else if (collision.gameObject.tag == "Planet") {
             Planet planet = collision.gameObject.GetComponent<Planet>();
-            planet.damage(Damage);
+            planet.Damage(Mathf.FloorToInt(Damage * enemy.planetDamageScale));
             Destroy(gameObject);
         }
     }

@@ -131,6 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 91033150}
+  - component: {fileID: 91033155}
   - component: {fileID: 91033152}
   - component: {fileID: 91033149}
   - component: {fileID: 91033154}
@@ -155,13 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31afc5fc7b03de54e9d4eb3a1a34f0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Controls:
-    ForwardGas: 119
-    BackwardGas: 115
-    SteerLeft: 97
-    SteerRight: 100
-    Boost: 304
-    Fire: 107
   Movement:
     MaxSpeed: 5
     SteerSpeed: 100
@@ -240,8 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553ef1acb8b9a8347b9ab99cc85ab8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 10000
-  IsDead: 0
+  maxHealth: 30
+  isDead: 0
 --- !u!58 &91033153
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -292,8 +286,39 @@ MonoBehaviour:
   SafeZone: {x: 60, y: 30}
   LethalBorder: {x: 70, y: 40}
   OutOfBoundsWarning: {fileID: 1699517635}
-  showGizmos: 1
+  showGizmos: 0
   flashTime: 1
+--- !u!114 &91033155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91033148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11683f1592b5f1d4f9a883d0bf135731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Controls:
+    ForwardGas:
+      keyCode1: 119
+      keyCode2: 0
+    BackwardGas:
+      keyCode1: 115
+      keyCode2: 0
+    SteerLeft:
+      keyCode1: 97
+      keyCode2: 0
+    SteerRight:
+      keyCode1: 100
+      keyCode2: 0
+    Boost:
+      keyCode1: 304
+      keyCode2: 0
+    Fire:
+      keyCode1: 107
+      keyCode2: 0
 --- !u!1 &122876413
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342db1737fe80d0408e305d4e60e4605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 1000
+  MaxHealth: 20000
   Health: 1
   OrbitSettings:
     StartOrbitRadius: 1.5
@@ -1487,7 +1512,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1668,6 +1693,27 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     UpgradePrefab: {fileID: 1257431942839172645, guid: bda578c774a195f499a097546da51fc8, type: 3}
+  - MinimumWave: 0
+    MaximumWave: 100
+    Weight: 3
+    MaximumUses: 5
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 224609617}
+          m_TargetAssemblyTypeName: Planet, Assembly-CSharp
+          m_MethodName: addTurrent
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 3339097972596038305, guid: c807277a543def44a81aee8d8c85bcc0, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 1.4
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    UpgradePrefab: {fileID: 1257431942839172645, guid: b2b9c8eb6e87e494db07b4219d935d4d, type: 3}
+  waveHandler: {fileID: 1386047021}
   optionsPerWave: 25
 --- !u!114 &1276065923
 MonoBehaviour:
@@ -1702,7 +1748,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1386047020}
-  - component: {fileID: 1386047019}
   - component: {fileID: 1386047021}
   m_Layer: 0
   m_Name: Spawner
@@ -1711,33 +1756,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1386047019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386047018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a78fa81b1e128394a88ec7afb5a65e39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MinSpawnRadius: 11
-  MaxSpawnRadius: 14.5
-  SpawnRate: 1.5
-  canSpawn: 1
-  Enemies:
-  - weight: 20
-    enemy: {fileID: 3289616820698895754, guid: 6a81ec8fc10b57d4ab018b504057bd5d, type: 3}
-  - weight: 30
-    enemy: {fileID: 3289616820698895754, guid: 79e0fef99e6d4d94694b636564a6197e, type: 3}
-  - weight: 35
-    enemy: {fileID: 3289616820698895754, guid: 3789a24260f6da8448950f24a0077228, type: 3}
-  - weight: 10
-    enemy: {fileID: 3289616820698895754, guid: 8d8e5f1b0a510b84892f6ae08d2dba6a, type: 3}
-  - weight: 5
-    enemy: {fileID: 3289616820698895754, guid: 2b1e77b7e04cd6e429a0572472665dec, type: 3}
 --- !u!4 &1386047020
 Transform:
   m_ObjectHideFlags: 0
@@ -1767,29 +1785,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgrader: {fileID: 1276065922}
   waves:
-  - scaling:
-      healthScale: 1
-      playerDamageScale: 1
-      planetDamageScale: 1
-    spawnTable:
+  - spawnTable:
     - weight: 20
       enemy: {fileID: 3289616820698895754, guid: 6a81ec8fc10b57d4ab018b504057bd5d, type: 3}
     spawnIntervals: 5
     spawnSpeed: 1
     intervalSpawnAmount: 2
-  - scaling:
-      healthScale: 1
-      playerDamageScale: 1
-      planetDamageScale: 1
-    spawnTable:
+  - spawnTable:
     - weight: 20
       enemy: {fileID: 3289616820698895754, guid: 6a81ec8fc10b57d4ab018b504057bd5d, type: 3}
     spawnIntervals: 10
     spawnSpeed: 1
     intervalSpawnAmount: 2
+  defaultWave:
+    spawnTable: []
+    spawnIntervals: 5
+    spawnSpeed: 1
+    intervalSpawnAmount: 2
+  scaling: []
   wave: -1
-  MinSpawnRadius: 10
-  MaxSpawnRadius: 15
+  MinSpawnRadius: 11
+  MaxSpawnRadius: 16
   enemies: []
 --- !u!1 &1487631943
 GameObject:

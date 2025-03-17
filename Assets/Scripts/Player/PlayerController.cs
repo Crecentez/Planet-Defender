@@ -6,31 +6,40 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField]
-    private int MaxHealth = 30;
-
-    private int Health = 1;
+    #region Variables
 
     [SerializeField]
-    public bool IsDead = false;
+    private int maxHealth = 30;
 
+    private int health = 1;
+
+    [SerializeField]
+    private bool isDead = false;
+
+    #endregion
+
+    #region Unity Methods
 
     private void Start() {
-        Health = MaxHealth;
+        health = maxHealth;
     }
 
-    public void Damage(int damage) {
-        Health -= damage;
+    #endregion
 
-        if (Health < 0) Kill();
+    #region Methods
+
+    public void Damage(int damage) {
+        health -= damage;
+
+        if (health < 0) Kill();
     }
 
     public void Kill() {
         Debug.Log("Died");
-        Health = MaxHealth;
+        health = maxHealth;
 
         //Destroy(gameObject);
-        IsDead = true;
+        isDead = true;
 
         Invoke("RestartGame", 3);
     }
@@ -40,5 +49,7 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene(currentSceneName);
     }
 
+    public bool IsDead() { return isDead; }
 
+    #endregion
 }

@@ -26,19 +26,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     [Serializable]
-    public class ControlsClass {
-
-        public KeyCode ForwardGas = KeyCode.W;
-        public KeyCode BackwardGas = KeyCode.S;
-        public KeyCode SteerLeft = KeyCode.A;
-        public KeyCode SteerRight = KeyCode.D;
-        public KeyCode Boost = KeyCode.LeftShift;
-
-        public KeyCode Fire = KeyCode.Mouse0;
-        
-    }
-
-    [Serializable]
     public class MovementClass {
 
         [Header("Speed")]
@@ -61,57 +48,57 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
-
-
-
     #endregion
 
     #region Variables
 
-    #region Public Variables
-
-
-    public ControlsClass Controls = new ControlsClass();
+    // Public
     public MovementClass Movement = new MovementClass();
     public GunClass Guns = new GunClass();
 
-    #endregion
-
-    #region Private Variables
-
-
+    // Private
+    private InputHandler inputHandler;
     private Rigidbody2D rb;
     private PlayerController pc;
 
     #endregion
 
-    #endregion
-
-    #region Private Functions
+    #region Unity Methods
 
     private void Start()
     {
         Movement.Boost = Movement.MaxBoost;
         rb = GetComponent<Rigidbody2D>();
         pc = GetComponent<PlayerController>();
+        inputHandler = GetComponent<InputHandler>();
 
         AttatchGuns();
     }
 
     private void Update()
     {
-        if (!pc.IsDead) {
+        if (!pc.IsDead()) {
             updateMovement();
             updateFiring();
         }
         
     }
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Planet") {
+            //Debug.Log("Hit Planet");
+            Vector3 dir3 = (collision.gameObject.transform.position - transform.position).normalized;
+            Vector2 dir = new Vector2(dir3.x, dir3.y);
+            GetComponent<Rigidbody2D>().velocity = dir * Movement.PlanetKnockback * -1;
+        }
+    }
+
+    #endregion
+
+    #region Methods
 
     private void updateFiring() 
     {
-        if (Input.GetMouseButton(0) || Input.GetKey(Controls.Fire)) {
-
+        if (inputHandler.Controls.Fire.GetKey()) {
             for (int i = 0; i < Guns.Guns.Count; i++) {
                 Gun gun = Guns.Guns[i].Gun;
                 if (gun != null) {
@@ -130,16 +117,16 @@ public class PlayerMovement : MonoBehaviour
         float accel = Movement.Acceleration;
         bool isBoosting = false;
 
-        if (Input.GetKey(Controls.Boost))
+        if (inputHandler.Controls.Boost.GetKey())
         {
             accel = Movement.BoostAcceleration;
             isBoosting = true;
         }
 
-        if (Input.GetKey(Controls.ForwardGas))
+        if (inputHandler.Controls.ForwardGas.GetKey())
         {
             rb.AddForce(new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * Time.deltaTime * accel);
-        } else if (Input.GetKey(Controls.BackwardGas))
+        } else if (inputHandler.Controls.BackwardGas.GetKey())
         {
             rb.AddForce(new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * Time.deltaTime * (accel * -0.75f));
         }
@@ -153,8 +140,8 @@ public class PlayerMovement : MonoBehaviour
     private int getXAxisInput()
     {
         int x = 0;
-        if (Input.GetKey(Controls.SteerLeft)) { x += 1; }
-        if (Input.GetKey(Controls.SteerRight)) { x -= 1; }
+        if (inputHandler.Controls.SteerLeft.GetKey()) { x += 1; }
+        if (inputHandler.Controls.SteerRight.GetKey()) { x -= 1; }
         return x;
     }
 
@@ -167,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
     #region Upgrades
 
@@ -177,14 +164,7 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Planet") {
-            //Debug.Log("Hit Planet");
-            Vector3 dir3 = (collision.gameObject.transform.position - transform.position).normalized;
-            Vector2 dir = new Vector2(dir3.x, dir3.y);
-            GetComponent<Rigidbody2D>().velocity = dir * Movement.PlanetKnockback * -1;
-        }
-    }
+    #region Gizmos
 
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
@@ -194,4 +174,6 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position + (transform.up * gunConnection.Position.y) + (transform.right * gunConnection.Position.x), 0.05f);
         }
     }
+
+    #endregion
 }

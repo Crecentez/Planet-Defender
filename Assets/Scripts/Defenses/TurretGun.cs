@@ -24,7 +24,7 @@ public class TurretGun : MonoBehaviour
 
     private void Start() {
         turret = GetComponent<Turret>();
-        if (turret != null ) {
+        if (turret == null ) {
             Debug.LogWarning("TURRET CLASS NOT FOUND");
         }
         fire();

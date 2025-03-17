@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class PlaySpaceBorder : MonoBehaviour
 {
+
+    #region Variables
+
+    // Public
     public Vector2 SafeZone = Vector2.zero;
     public Vector2 LethalBorder = Vector2.one;
     public GameObject OutOfBoundsWarning;
 
+    // Private
     [SerializeField]
     private bool showGizmos = false;
-
     [SerializeField]
     private float flashTime = 1f;
-
     private bool showWarning = false;
+
+    #endregion
+
+    #region Unity Methods
 
     private void Update() {
         if (outOfBounds() && !showWarning) {
@@ -29,6 +36,10 @@ public class PlaySpaceBorder : MonoBehaviour
             GetComponent<PlayerController>().Kill();
         }
     }
+
+    #endregion
+
+    #region Methods
 
     private void startWarning() {
         OutOfBoundsWarning.SetActive(true);
@@ -54,9 +65,12 @@ public class PlaySpaceBorder : MonoBehaviour
         return oobX || oobY;
     }
 
+    #endregion
+
+    #region Gizmos
     private void gizmosDrawRectangle(Vector3[] points) {
         for (int i = 0; i < points.Length; i++) {
-            if (i+1 < points.Length) {
+            if (i + 1 < points.Length) {
                 Gizmos.DrawLine(points[i], points[i + 1]);
             }
         }
@@ -73,7 +87,7 @@ public class PlaySpaceBorder : MonoBehaviour
                 new Vector3(SafeZone.x / 2, -SafeZone.y / 2, 0)
             };
             
-            Gizmos.color = Color.white;
+            Gizmos.color = Color.yellow;
             gizmosDrawRectangle(safeZonePoints);
 
             Vector3[] lethalZonePoints = new Vector3[4] {
@@ -87,4 +101,6 @@ public class PlaySpaceBorder : MonoBehaviour
             gizmosDrawRectangle(lethalZonePoints);
         }
     }
+
+    #endregion
 }

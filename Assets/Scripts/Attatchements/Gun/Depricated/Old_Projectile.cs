@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class Projectile : MonoBehaviour
+
+public class Old_Projectile : MonoBehaviour
 {
     public float Speed = 5f;
     public float LifeTime = 3f;
@@ -12,11 +13,17 @@ public class Projectile : MonoBehaviour
     public float EnemyKnockback = 1f;
     public float PlayerKnockback = 0.5f;
 
+    private Planet planet;
 
     private void Start() {
 
         //GameObject player = GameObject.FindWithTag("Player");
         //player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * PlayerKnockback * -1);
+
+        GameObject planetGM = GameObject.FindGameObjectWithTag("Planet");
+        if (planetGM != null) {
+            planet = planetGM.GetComponent<Planet>();
+        }
 
         GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x, transform.up.y) * Speed;
 

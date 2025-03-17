@@ -68,18 +68,18 @@ public class EnemySpawner : MonoBehaviour
     }
 
 
-    private void OnDrawGizmosSelected() {
+    //private void OnDrawGizmosSelected() {
 
-        if (MinSpawnRadius > MaxSpawnRadius) {  MinSpawnRadius = MaxSpawnRadius; }
+    //    if (MinSpawnRadius > MaxSpawnRadius) {  MinSpawnRadius = MaxSpawnRadius; }
 
-        if (MaxSpawnRadius == MinSpawnRadius) {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(gameObject.transform.position, MaxSpawnRadius);
-        } else {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(gameObject.transform.position, MinSpawnRadius);
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(gameObject.transform.position, MaxSpawnRadius);
-        }
-    }
+    //    if (MaxSpawnRadius == MinSpawnRadius) {
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawWireSphere(gameObject.transform.position, MaxSpawnRadius);
+    //    } else {
+    //        Gizmos.color = Color.yellow;
+    //        Gizmos.DrawWireSphere(gameObject.transform.position, MinSpawnRadius);
+    //        Gizmos.color = Color.red;
+    //        Gizmos.DrawWireSphere(gameObject.transform.position, MaxSpawnRadius);
+    //    }
+    //}
 }

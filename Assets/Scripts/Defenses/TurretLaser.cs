@@ -9,11 +9,11 @@ public class TurretLaser : MonoBehaviour
     [Serializable]
     public class Settings {
         public float ShootRadius = 8f;
-        public float FireRate = 1f;
-        public Vector2 Offset = Vector2.zero;
+        public int Damage = 1;
+        public float DamageRate = 0.1f;
         public float TurnSpeed = 100f;
 
-        public GameObject BulletPrefab;
+        public LineRenderer lineRenderer;
     }
 
     public Settings settings;
@@ -22,24 +22,33 @@ public class TurretLaser : MonoBehaviour
     private Turret turret;
     private GameObject Targeting;
 
+    
+
     private void Start() {
         turret = GetComponent<Turret>();
-        if (turret != null ) {
+        if (turret == null ) {
             Debug.LogWarning("TURRET CLASS NOT FOUND");
         }
         fire();
     }
 
     private void FixedUpdate() {
+        UpdateLaserPosition(0, settings.lineRenderer.gameObject.transform.position);
         if (Targeting != null) {
             float angle = Mathf.Atan2(Targeting.transform.position.y - transform.position.y, Targeting.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, settings.TurnSpeed * Time.fixedDeltaTime);
+            UpdateLaserPosition(1, Targeting.transform.position);
+            settings.lineRenderer.enabled = true;
         } else {
             Targeting = getClosestEnemy();
+            settings.lineRenderer.enabled = false;
         }
     }
 
+    private void UpdateLaserPosition(int index, Vector3 pos) {
+        settings.lineRenderer.SetPosition(index, new Vector3(pos.x, pos.y, 10));
+    }
     private GameObject getClosestEnemy() {
         GameObject closestEnemy = null;
         float closestDistance = settings.ShootRadius + 1f;
@@ -49,32 +58,20 @@ public class TurretLaser : MonoBehaviour
                 closestDistance = (go.transform.position - transform.position).magnitude;
             }
         }
-        //foreach (GameObject go in enemiesInRadius) {
-        //    if ((go.transform.position - transform.position).magnitude < closestDistance) {
-        //        closestEnemy = go;
-        //        closestDistance = (go.transform.position - transform.position).magnitude;
-        //    }
-        //}
         return closestEnemy;
     }
 
     private void fire() {
         //GameObject closestEnemy = getClosestEnemy();
         if (Targeting != null) {
-            GameObject b = Instantiate(settings.BulletPrefab);
-            b.transform.position = transform.position + (transform.up * settings.Offset.y) + (transform.right * settings.Offset.x);
-            //b.transform.rotation = transform.rotation;
-            Rigidbody2D trb = Targeting.GetComponent<Rigidbody2D>();
-            Vector3 targ = Targeting.transform.position + (new Vector3(trb.velocity.x, trb.velocity.y, 0)); // /(speedOfBullet * Distance * adjustVariable);
-            targ.z = 0f;
-            targ.x = targ.x - b.transform.position.x;
-            targ.y = targ.y - b.transform.position.y;
-            float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
-            b.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+            Enemy e = Targeting.GetComponent<Enemy>();
+            if (e != null) {
+                e.Damage(settings.Damage);
+            }
 
         }
         //Targeting = getClosestEnemy();
-        Invoke("fire", settings.FireRate);
+        Invoke("fire", settings.DamageRate);
     }
 
     private void OnDrawGizmosSelected() {

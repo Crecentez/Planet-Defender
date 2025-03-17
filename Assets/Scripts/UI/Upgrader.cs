@@ -37,7 +37,9 @@ public class Upgrader : MonoBehaviour
 
     [SerializeField]
     private List<Upgrade> Upgrades = new List<Upgrade>();
-    
+
+    [SerializeField]
+    private WaveHandler waveHandler;
 
     [SerializeField]
     private const int OFFER_COUNT = 3;
@@ -53,11 +55,19 @@ public class Upgrader : MonoBehaviour
         Upgrade upgrade = Upgrades[upgradeIndex];
         upgrade.AddUse();
         upgrade.OnSelect.Invoke();
+        Close();
+        waveHandler.StartNextWave();
     }
 
     public void AddUse(int upgradeIndex) {
         Upgrade upgrade = Upgrades[upgradeIndex];
         upgrade.AddUse();
+    }
+
+    public void Close() {
+        for (int i = 0; i < gameObject.transform.childCount; i++) {
+            Destroy(gameObject.transform.GetChild(i).gameObject);
+        }
     }
     
     public void OfferUpgrade(int wave) {
