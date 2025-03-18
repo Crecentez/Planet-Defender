@@ -56,26 +56,21 @@ public class InputHandler : MonoBehaviour
         //}
     }
 
-    [Serializable]
-    public class ControlsClass {
-
-
-        public Control ForwardGas = new Control(KeyCode.W);
-        public Control BackwardGas = new Control(KeyCode.S);
-        public Control SteerLeft = new Control(KeyCode.A);
-        public Control SteerRight = new Control(KeyCode.D);
-
-        public Control Boost = new Control(KeyCode.LeftShift);
-
-        public Control Fire = new Control(KeyCode.K);
-
-    }
 
     #endregion
 
     #region Variables
 
-    public ControlsClass Controls = new ControlsClass();
+    public Control ForwardGas = new Control(KeyCode.W);
+    public Control BackwardGas = new Control(KeyCode.S);
+    public Control SteerLeft = new Control(KeyCode.A);
+    public Control SteerRight = new Control(KeyCode.D);
+
+    public Control Boost = new Control(KeyCode.LeftShift);
+
+    public Control Fire = new Control(KeyCode.K);
+
+    public Control Pause = new Control(KeyCode.Escape);
 
     #endregion
 

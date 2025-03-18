@@ -61,18 +61,14 @@ public class PlayerMovement : MonoBehaviour
         gameObject.transform.eulerAngles = new Vector3(0, 0, gameObject.transform.eulerAngles.z + SteerSpeed * Time.deltaTime * steerDir);
 
         float accel = Acceleration;
-        bool isBoosting = false;
 
-        if (_input.Controls.Boost.GetKey())
-        {
+        if (_input.Boost.GetKey())
             accel = BoostAcceleration;
-            isBoosting = true;
-        }
 
-        if (_input.Controls.ForwardGas.GetKey())
+        if (_input.ForwardGas.GetKey())
         {
             _rb.AddForce(new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * Time.deltaTime * accel);
-        } else if (_input.Controls.BackwardGas.GetKey())
+        } else if (_input.BackwardGas.GetKey())
         {
             _rb.AddForce(new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * Time.deltaTime * (accel * -0.75f));
         }
@@ -81,8 +77,8 @@ public class PlayerMovement : MonoBehaviour
     private int getXAxisInput()
     {
         int x = 0;
-        if (_input.Controls.SteerLeft.GetKey()) { x += 1; }
-        if (_input.Controls.SteerRight.GetKey()) { x -= 1; }
+        if (_input.SteerLeft.GetKey()) { x += 1; }
+        if (_input.SteerRight.GetKey()) { x -= 1; }
         return x;
     }
 

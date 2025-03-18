@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlaySpaceBorder _border;
     [SerializeField] private Camera _camera;
 
+    public bool isPaused { get; private set; }  = false;
+
     // Events
     public event HealthUpdated OnHealthUpdated;
     public event Action OnKilled;
@@ -37,6 +39,15 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         health = _maxHealth;
 
+    }
+
+    private void Update() {
+        if (_input.Pause.GetKeyDown()) {
+            if (isPaused) 
+                Resume();
+            else
+                Pause();
+        }
     }
 
     #endregion
@@ -67,6 +78,15 @@ public class PlayerController : MonoBehaviour
     public IEnumerator RestartGame() {
         yield return new WaitForSeconds(3f);
         yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+    }
+
+    public void Pause() {
+        isPaused = true;
+        OnPauseStateUpdated?.Invoke(isPaused);
+    }
+    public void Resume() {
+        isPaused = false;
+        OnPauseStateUpdated?.Invoke(isPaused);
     }
 
     public int MaxHealth() { return _maxHealth; }

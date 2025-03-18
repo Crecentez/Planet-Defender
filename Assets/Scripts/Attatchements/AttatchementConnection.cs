@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[Serializable]
 public class AttatchementConnection {
 
     #region Varaibles
@@ -10,10 +11,10 @@ public class AttatchementConnection {
     public Vector3 offset;
     public Attatchement.AttatchementType type = Attatchement.AttatchementType.NONE;
 
-    private Attatchement attatchement;
+    public Attatchement attatchement { get; private set; }
 
     public AttatchementConnection() { attatchement = null; }
-
+    
     #endregion
 
     #region Methods
@@ -31,8 +32,6 @@ public class AttatchementConnection {
         this.attatchement = null;
         return a;
     }
-
-    public Attatchement GetAttatchement() { return attatchement; }
 
     public bool CompareType(Attatchement attatchement) {
         return type == Attatchement.AttatchementType.NONE || type == attatchement.GetAttatchementType();

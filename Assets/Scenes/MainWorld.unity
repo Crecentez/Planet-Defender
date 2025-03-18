@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 91033155}
   - component: {fileID: 91033149}
   - component: {fileID: 91033154}
+  - component: {fileID: 91033156}
   - component: {fileID: 91033151}
   - component: {fileID: 91033153}
   m_Layer: 7
@@ -217,6 +218,9 @@ MonoBehaviour:
   _maxHealth: 30
   _movement: {fileID: 91033149}
   _input: {fileID: 91033155}
+  _attatchement:
+    offset: {x: 0, y: 0, z: 0}
+    type: 0
   _border: {fileID: 91033154}
   _camera: {fileID: 0}
 --- !u!58 &91033153
@@ -266,9 +270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5532c33c9ae0de4f89ca8bbc79612a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SafeZone: {x: 60, y: 30}
-  LethalBorder: {x: 70, y: 40}
-  OutOfBoundsWarning: {fileID: 1699517635}
+  _safeZone: {x: 0, y: 0}
+  _lethalBorder: {x: 1, y: 1}
+  _outOfBoundsWarning: {fileID: 1699517635}
+  _controller: {fileID: 91033152}
   showGizmos: 0
   flashTime: 1
 --- !u!114 &91033155
@@ -283,25 +288,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11683f1592b5f1d4f9a883d0bf135731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Controls:
-    ForwardGas:
-      keyCode1: 119
-      keyCode2: 0
-    BackwardGas:
-      keyCode1: 115
-      keyCode2: 0
-    SteerLeft:
-      keyCode1: 97
-      keyCode2: 0
-    SteerRight:
-      keyCode1: 100
-      keyCode2: 0
-    Boost:
-      keyCode1: 304
-      keyCode2: 0
-    Fire:
-      keyCode1: 107
-      keyCode2: 0
+  ForwardGas:
+    keyCode1: 119
+    keyCode2: 0
+  BackwardGas:
+    keyCode1: 115
+    keyCode2: 0
+  SteerLeft:
+    keyCode1: 97
+    keyCode2: 0
+  SteerRight:
+    keyCode1: 100
+    keyCode2: 0
+  Boost:
+    keyCode1: 304
+    keyCode2: 0
+  Fire:
+    keyCode1: 107
+    keyCode2: 0
+  Pause:
+    keyCode1: 27
+    keyCode2: 0
+--- !u!114 &91033156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91033148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a89720973ab49489494fb6af6f2bbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attatchements:
+  - offset: {x: -0.15, y: 0.01, z: 0}
+    type: 1
+  - offset: {x: 0.15, y: 0.01, z: 0}
+    type: 1
 --- !u!1 &122876413
 GameObject:
   m_ObjectHideFlags: 0
