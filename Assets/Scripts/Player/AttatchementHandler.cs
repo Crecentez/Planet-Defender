@@ -10,28 +10,10 @@ public class AttatchementHandler : MonoBehaviour
     #region Variables
 
     [SerializeField] private List<AttatchementConnection> _attatchements = new List<AttatchementConnection>();
-
-    [SerializeField] InputHandler _inputHandler;
+    
     [SerializeField] PlayerController _controller;
 
-    private bool _canFire = false;
-
     private const float GizmosSize = 0.1f;
-
-    #endregion
-
-    #region Unity Methods
-
-    private void Start() {
-
-        _canFire = true;
-    }
-
-    private void Update() {
-        if (_canFire && _inputHandler.Fire.GetKey()) {
-
-        }
-    }
 
     #endregion
 

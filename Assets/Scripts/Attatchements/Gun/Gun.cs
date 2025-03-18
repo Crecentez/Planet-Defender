@@ -23,13 +23,13 @@ public class Gun : Attatchement
 
     #region Variables
 
-    public Settings_Class settings;
+    [SerializeField] private Settings_Class settings;
 
-    [SerializeField]
-    private GameObject BulletPrefab;
+    [SerializeField] private GameObject _bulletPrefab;
 
+    private InputHandler _input;
     private Planet planet;
-    private bool CanFire = false;
+    private bool _canFire = false;
     
     #endregion
 
@@ -37,10 +37,20 @@ public class Gun : Attatchement
 
     private void Start() {
         GameObject planet_gm = GameObject.FindGameObjectWithTag("Planet");
-        if (BulletPrefab.GetComponent<Projectile>() != null || planet_gm != null) {
+        if (_bulletPrefab.GetComponent<Projectile>() != null || planet_gm != null) {
             planet = planet_gm.GetComponent<Planet>();
-            CanFire = true;
-        } else { Debug.LogWarning("Planet fot found!"); }
+            _canFire = true;
+        } else { Debug.LogWarning("Planet not found!"); }
+        GameObject player_gm = GameObject.FindGameObjectWithTag("Player");
+        if (player_gm != null) {
+            _input = player_gm.GetComponent<InputHandler>();
+        } else { Debug.LogWarning("Player not found!"); }
+    }
+
+    private void Update() {
+        if (_canFire && _input.Fire.GetKey()) {
+
+        }
     }
 
     #endregion
@@ -48,10 +58,10 @@ public class Gun : Attatchement
     #region Methods
 
     public void Fire() {
-        if (CanFire) {
-            CanFire = false;
+        if (_canFire) {
+            _canFire = false;
 
-            GameObject b = Instantiate(BulletPrefab);
+            GameObject b = Instantiate(_bulletPrefab);
 
             //GameObject player = GameObject.FindWithTag("Player");
             //player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * b.GetComponent<Projectile>().PlayerKnockback * -1);
@@ -63,7 +73,7 @@ public class Gun : Attatchement
     }
 
     public void ResetFire() {
-        CanFire = true;
+        _canFire = true;
     }
 
     #endregion
