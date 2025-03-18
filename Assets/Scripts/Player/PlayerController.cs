@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerMovement _movement;
     [SerializeField] private InputHandler _input;
-    [SerializeField] private AttatchementConnection _attatchement;
+    [SerializeField] private AttatchementHandler _attatchement;
     [SerializeField] private PlaySpaceBorder _border;
     [SerializeField] private Camera _camera;
 

@@ -3,30 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Attatchement : MonoBehaviour
 {
+
     #region Classes
 
     public enum AttatchementType {
         NONE,
-        Gun
-    }
-
-    [Serializable]
-    public class Info_Class {
-        public string name;
-        public string description;
-        public AttatchementType type = AttatchementType.NONE;
-
-        public Info_Class() { }
+        Gun,
+        Shield
     }
 
     #endregion
 
     #region Variables
 
-    [SerializeField]
-    private Info_Class info;
+    [SerializeField] private string _name;
+    [SerializeField][TextArea] private string _description;
+    [SerializeField] private AttatchementType _type;
 
     #endregion
 
@@ -37,11 +33,12 @@ public class Attatchement : MonoBehaviour
         transform.localPosition = localPosition;
     }
 
-    //public Info_Class GetInfo() { return info; }
 
-    public string GetName() { return info.name; }
-    public string GetDescription() { return info.description; }
-    public AttatchementType GetAttatchementType() {  return info.type; }
+    public string GetName() { return _name; }
+    public string GetDescription() { return _description; }
+    public AttatchementType GetAttatchementType() {  return _type; }
 
     #endregion
+
+    
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class AttatchementHandler : MonoBehaviour
@@ -10,7 +11,10 @@ public class AttatchementHandler : MonoBehaviour
 
     [SerializeField] private List<AttatchementConnection> _attatchements = new List<AttatchementConnection>();
 
-    private bool _canUse = false;
+    [SerializeField] InputHandler _inputHandler;
+    [SerializeField] PlayerController _controller;
+
+    private bool _canFire = false;
 
     private const float GizmosSize = 0.1f;
 
@@ -20,13 +24,46 @@ public class AttatchementHandler : MonoBehaviour
 
     private void Start() {
 
-        _canUse = true;
+        _canFire = true;
+    }
+
+    private void Update() {
+        if (_canFire && _inputHandler.Fire.GetKey()) {
+
+        }
     }
 
     #endregion
 
     #region Methods
 
+    public GameObject AddAttatchement(GameObject prefab) {
+
+        Attatchement attatchement = prefab.GetComponent<Attatchement>();
+        if (attatchement == null)
+            return null;
+        AttatchementConnection connection = GetConnection(attatchement);
+        if (connection == null)
+            return null;
+
+        GameObject obj = Instantiate(prefab);
+        attatchement = obj.GetComponent<Attatchement>();
+
+        connection.Attatch(transform, attatchement);
+
+        return obj;
+    }
+
+    private AttatchementConnection GetConnection(Attatchement attatchement) {
+
+        foreach(AttatchementConnection connection in _attatchements) {
+            if (connection.IsAvailable(attatchement)) {
+                return connection;
+            }
+        }
+
+        return null;
+    }
 
     #endregion
 
@@ -36,7 +73,17 @@ public class AttatchementHandler : MonoBehaviour
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = Color.blue;
         foreach (AttatchementConnection ac in _attatchements) {
-
+            switch (ac.type) {
+                case Attatchement.AttatchementType.Gun:
+                    Gizmos.color = Color.red;
+                    break;
+                case Attatchement.AttatchementType.Shield:
+                    Gizmos.color = Color.yellow;
+                    break;
+                default:
+                    Gizmos.color = Color.white;
+                    break;
+            }
             Gizmos.DrawCube(ac.offset, new Vector3(GizmosSize, GizmosSize, GizmosSize));
         }
     }

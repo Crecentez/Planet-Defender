@@ -45,13 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b32ea6a0c8ff7446bdea458ce4d5b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info:
-    name: 
-    description: 
-    type: 0
+  _name: Basic Gun
+  _description: Shoots weak bullets at a slow rate of fire
+  _type: 1
   settings:
     fireRate: 0.5
-    offset: {x: 0, y: 10}
+    offset: {x: 0, y: 0.05}
     rotation: 0
   BulletPrefab: {fileID: 7917688255547569854, guid: af543bc13271bb3458cb67803efd6c62, type: 3}
 --- !u!1 &5628950409534378839

@@ -11,7 +11,7 @@ public class AttatchementConnection {
     public Vector3 offset;
     public Attatchement.AttatchementType type = Attatchement.AttatchementType.NONE;
 
-    public Attatchement attatchement { get; private set; }
+    [SerializeField] private Attatchement attatchement;
 
     public AttatchementConnection() { attatchement = null; }
     
@@ -19,9 +19,10 @@ public class AttatchementConnection {
 
     #region Methods
 
-    public bool Attatch(Attatchement attatchement) {
-        if (this.attatchement == null && CompareType(attatchement)) {
+    public bool Attatch(Transform transform, Attatchement attatchement) {
+        if (IsAvailable(attatchement)) {
             this.attatchement = attatchement;
+            attatchement.Attatch(transform, offset);
             return true;
         }
         return false;
@@ -33,8 +34,12 @@ public class AttatchementConnection {
         return a;
     }
 
-    public bool CompareType(Attatchement attatchement) {
-        return type == Attatchement.AttatchementType.NONE || type == attatchement.GetAttatchementType();
+    public bool IsAvailable(Attatchement attatchement) {
+        return this.attatchement == null && CompareType(attatchement.GetAttatchementType());
+    }
+
+    public bool CompareType(Attatchement.AttatchementType attatchementType) {
+        return type == Attatchement.AttatchementType.NONE || type == attatchementType;
     }
 
     #endregion

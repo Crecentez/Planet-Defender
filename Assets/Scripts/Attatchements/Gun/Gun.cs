@@ -73,10 +73,7 @@ public class Gun : Attatchement
     private void OnDrawGizmosSelected() {
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = Color.green;
-
-        Vector3 offset = new Vector3(transform.forward.x * settings.offset.x, transform.forward.y * settings.offset.y, 0);
-        //Debug.Log(offset);
-        Gizmos.DrawWireSphere(transform.position + offset, 0.05f);
+        Gizmos.DrawWireSphere(settings.offset, 0.02f);
     }
 
     #endregion
