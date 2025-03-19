@@ -45,18 +45,18 @@ public class ProjectileBasic : Projectile
         //    Destroy(gameObject);
         //}
 
-        rb.velocity = new Vector2(transform.up.x, transform.up.y) * settings.speed;
+        rb.linearVelocity = new Vector2(transform.up.x, transform.up.y) * settings.speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         GameObject gm = collision.gameObject;
         
         if (CanDamage(CanDamageTypes.Enemy) && gm.GetComponent<Enemy>()) {
-            ApplyKnockback(gm, settings.knockback * rb.velocity.normalized);
+            ApplyKnockback(gm, settings.knockback * rb.linearVelocity.normalized);
             Damage(gm.GetComponent<Enemy>(), settings.damage);
             Destroy(gameObject);
         } else if (CanDamage(CanDamageTypes.Player) && gm.GetComponent<PlayerController>()) {
-            ApplyKnockback(gm, settings.knockback * rb.velocity.normalized);
+            ApplyKnockback(gm, settings.knockback * rb.linearVelocity.normalized);
             Damage(gm.GetComponent<PlayerController>(), settings.damage);
             Destroy(gameObject);
         } else if (CanDamage(CanDamageTypes.Planet) && gm.GetComponent<Planet>()) {

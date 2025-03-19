@@ -80,7 +80,7 @@ public class Shooter : Enemy
                         Vector3 movDir = (transform.position - player.transform.position).normalized;
                         Vector2 vel = new Vector2(movDir.x, movDir.y) * Acceleration;
 
-                        if (rb.velocity.magnitude < MaxSpeed * 1.5) {
+                        if (rb.linearVelocity.magnitude < MaxSpeed * 1.5) {
                             rb.AddForce(vel);
                         }
 
@@ -94,7 +94,7 @@ public class Shooter : Enemy
                     Vector3 movDir = (transform.position - player.transform.position).normalized;
                     Vector2 vel = new Vector2(movDir.x, movDir.y) * Acceleration * -1;
 
-                    if (rb.velocity.magnitude < MaxSpeed) {
+                    if (rb.linearVelocity.magnitude < MaxSpeed) {
                         rb.AddForce(vel);
                     }
                 }
@@ -159,7 +159,7 @@ public class Shooter : Enemy
                 Vector3 movDir = (transform.position - planet.transform.position).normalized;
                 Vector2 vel = new Vector2(movDir.x, movDir.y) * Acceleration * -1;
 
-                if (rb.velocity.magnitude < MaxSpeed) {
+                if (rb.linearVelocity.magnitude < MaxSpeed) {
                     rb.AddForce(vel);
                 }
 

@@ -90,7 +90,7 @@ public class Charger : Enemy
         Vector3 movDir = (transform.position - Target.transform.position).normalized;
         Vector2 vel = new Vector2(movDir.x, movDir.y) * Settings.Acceleration * -1;
 
-        if (rb.velocity.magnitude < Settings.MaxSpeed) {
+        if (rb.linearVelocity.magnitude < Settings.MaxSpeed) {
             rb.AddForce(vel);
         }
     }
@@ -98,7 +98,7 @@ public class Charger : Enemy
     public void ApplyKnockback(Vector3 AwayFrom, Rigidbody2D To, float amount) {
         Vector3 dir3 = (AwayFrom - To.gameObject.transform.position).normalized;
         Vector2 dir = new Vector2(dir3.x, dir3.y);
-        To.velocity = dir * amount * -1f;
+        To.linearVelocity = dir * amount * -1f;
     }
 
     private void OnDrawGizmosSelected() {

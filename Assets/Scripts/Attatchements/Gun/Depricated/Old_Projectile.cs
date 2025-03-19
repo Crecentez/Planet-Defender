@@ -25,7 +25,7 @@ public class Old_Projectile : MonoBehaviour
             planet = planetGM.GetComponent<Planet>();
         }
 
-        GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x, transform.up.y) * Speed;
+        GetComponent<Rigidbody2D>().linearVelocity = new Vector2(transform.up.x, transform.up.y) * Speed;
 
         Invoke("DestroyBullet", LifeTime);
     }
@@ -36,7 +36,7 @@ public class Old_Projectile : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Enemy>()) {
             Enemy e = collision.gameObject.GetComponent<Enemy>();
-            rb.AddForce(GetComponent<Rigidbody2D>().velocity.normalized * EnemyKnockback);
+            rb.AddForce(GetComponent<Rigidbody2D>().linearVelocity.normalized * EnemyKnockback);
 
             e.Damage(Damage);
             DestroyBullet();

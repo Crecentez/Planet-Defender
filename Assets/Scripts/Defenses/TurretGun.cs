@@ -65,7 +65,7 @@ public class TurretGun : MonoBehaviour
             b.transform.position = transform.position + (transform.up * settings.Offset.y) + (transform.right * settings.Offset.x);
             //b.transform.rotation = transform.rotation;
             Rigidbody2D trb = Targeting.GetComponent<Rigidbody2D>();
-            Vector3 targ = Targeting.transform.position + (new Vector3(trb.velocity.x, trb.velocity.y, 0)); // /(speedOfBullet * Distance * adjustVariable);
+            Vector3 targ = Targeting.transform.position + (new Vector3(trb.linearVelocity.x, trb.linearVelocity.y, 0)); // /(speedOfBullet * Distance * adjustVariable);
             targ.z = 0f;
             targ.x = targ.x - b.transform.position.x;
             targ.y = targ.y - b.transform.position.y;

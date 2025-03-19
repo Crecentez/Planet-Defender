@@ -14,7 +14,7 @@ public class Enemy_Projectile : MonoBehaviour
 
     private void Start() {
 
-        GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x, transform.up.y) * Speed;
+        GetComponent<Rigidbody2D>().linearVelocity = new Vector2(transform.up.x, transform.up.y) * Speed;
 
         Invoke("DestroyBullet", LifeTime);
     }
