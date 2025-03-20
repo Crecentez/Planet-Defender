@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 
 public delegate void HealthUpdated(int old, int current);
-
 public class PlayerController : MonoBehaviour
 {
 

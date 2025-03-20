@@ -28,6 +28,7 @@ public class Gun : Attatchement
 
     [SerializeField] private GameObject _bulletPrefab;
 
+    private GameInputMap _input;
     private InputAction _fireInput;
 
     private Planet planet;
@@ -38,31 +39,35 @@ public class Gun : Attatchement
     #region Unity Methods
 
     private void OnEnable() {
-        InputSystemActions.Instance.Gun.Enable();
-        _fireInput = InputSystemActions.Instance.Gun.Fire;
+        _input = new GameInputMap();
+        _input.Gun.Enable();
+        _fireInput = _input.Gun.Fire;
     }
 
     private void OnDisable() {
-        InputSystemActions.Instance.Gun.Disable();
+        _input.Gun.Disable();
+        _input = null;
     }
 
     private void Start() {
-        GameObject planet_gm = GameObject.FindGameObjectWithTag("Planet");
-        if (_bulletPrefab.GetComponent<Projectile>() != null || planet_gm != null) {
-            planet = planet_gm.GetComponent<Planet>();
-            _canFire = true;
-        } else { Debug.LogWarning("Planet not found!"); }
+        //GameObject planet_gm = GameObject.FindGameObjectWithTag("Planet");
+        //if (_bulletPrefab.GetComponent<Projectile>() != null || planet_gm != null) {
+        //    planet = planet_gm.GetComponent<Planet>();
+        //    _canFire = true;
+        //} else { Debug.LogWarning("Planet not found!"); }
     }
 
     private void Update() {
-
+        if (_canFire && _fireInput.IsPressed()) {
+            StartCoroutine(Fire());
+        }
     }
 
     #endregion
 
     #region Methods
 
-    public void Fire() {
+    public IEnumerator Fire() {
         if (_canFire) {
             _canFire = false;
 
@@ -73,13 +78,11 @@ public class Gun : Attatchement
             b.transform.position = transform.position + (transform.up * settings.offset.y) + (transform.right * settings.offset.x);
             b.transform.rotation = new quaternion(transform.rotation.x + (Mathf.Deg2Rad * settings.rotation), transform.rotation.y, transform.rotation.z, transform.rotation.w);
 
-            Invoke("ResetFire", settings.fireRate);
+            yield return new WaitForSeconds(settings.fireRate);
+            _canFire = true;
         }
     }
 
-    public void ResetFire() {
-        _canFire = true;
-    }
 
     #endregion
 
