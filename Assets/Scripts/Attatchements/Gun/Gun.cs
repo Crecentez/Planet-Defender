@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Gun : Attatchement
 {
@@ -27,13 +28,23 @@ public class Gun : Attatchement
 
     [SerializeField] private GameObject _bulletPrefab;
 
-    private InputHandler _input;
+    private InputAction _fireInput;
+
     private Planet planet;
     private bool _canFire = false;
-    
+
     #endregion
 
     #region Unity Methods
+
+    private void OnEnable() {
+        InputSystemActions.Instance.Gun.Enable();
+        _fireInput = InputSystemActions.Instance.Gun.Fire;
+    }
+
+    private void OnDisable() {
+        InputSystemActions.Instance.Gun.Disable();
+    }
 
     private void Start() {
         GameObject planet_gm = GameObject.FindGameObjectWithTag("Planet");
@@ -41,16 +52,10 @@ public class Gun : Attatchement
             planet = planet_gm.GetComponent<Planet>();
             _canFire = true;
         } else { Debug.LogWarning("Planet not found!"); }
-        GameObject player_gm = GameObject.FindGameObjectWithTag("Player");
-        if (player_gm != null) {
-            _input = player_gm.GetComponent<InputHandler>();
-        } else { Debug.LogWarning("Player not found!"); }
     }
 
     private void Update() {
-        if (_canFire && _input.Fire.GetKey()) {
 
-        }
     }
 
     #endregion

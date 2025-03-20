@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public bool isDead { get; private set; } = false;
 
     [SerializeField] private PlayerMovement _movement;
-    [SerializeField] private InputHandler _input;
     [SerializeField] private AttatchementHandler _attatchement;
     [SerializeField] private PlaySpaceBorder _border;
     [SerializeField] private Camera _camera;
@@ -39,15 +38,6 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         health = _maxHealth;
 
-    }
-
-    private void Update() {
-        if (_input.Pause.GetKeyDown()) {
-            if (isPaused) 
-                Resume();
-            else
-                Pause();
-        }
     }
 
     #endregion

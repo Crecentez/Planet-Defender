@@ -35,13 +35,13 @@ public class PlayerMovement : MonoBehaviour
     #region Unity Methods
 
     private void OnEnable() {
-        InputSystemActions.Instance.Enable();
+        InputSystemActions.Instance.Player.Enable();
         _moveInput = InputSystemActions.Instance.Player.Move;
         _boostInput = InputSystemActions.Instance.Player.Boost;
     }
 
     private void OnDisable() {
-        InputSystemActions.Instance.Disable();
+        InputSystemActions.Instance.Player.Disable();
     }
 
     private void Update()
@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 input = getMoveInput();
 
-        gameObject.transform.eulerAngles = new Vector3(0, 0, gameObject.transform.eulerAngles.z + SteerSpeed * Time.deltaTime * input.x);
+        gameObject.transform.eulerAngles = new Vector3(0, 0, gameObject.transform.eulerAngles.z + SteerSpeed * Time.deltaTime * input.x * -1);
 
         float accel = Acceleration;
         if (_boostInput.IsPressed()) {

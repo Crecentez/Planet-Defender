@@ -64,32 +64,25 @@ public class WaveHandler : MonoBehaviour
 
     #region Variables
 
-    [SerializeField]
-    private Upgrader upgrader;
+    //[SerializeField] private Upgrader upgrader;
 
     [Header("Waves")]
-    [SerializeField]
-    private List<Wave> waves = new List<Wave>();
-    [SerializeField]
-    private Wave defaultWave = new Wave();
-    [SerializeField]
-    private List<LinearScaling> scaling = new List<LinearScaling>(); 
-    [SerializeField]
-    private int wave = -1;
+    [SerializeField] private List<Wave> _waves = new List<Wave>();
+    [SerializeField] private Wave _defaultWave = new Wave();
+    [SerializeField] private List<LinearScaling> _scaling = new List<LinearScaling>(); 
+    [SerializeField] private int _wave = -1;
 
     [Header("Spawning")]
     public float MinSpawnRadius = 10f;
     public float MaxSpawnRadius = 15f;
-    [SerializeField]
-    private List<GameObject> enemies = new List<GameObject>();
+    [SerializeField] private List<GameObject> _enemies = new List<GameObject>();
 
     #endregion
 
     #region Unity Methods
 
     private void Start() {
-        upgrader.OfferUpgrade(2);
-        //Invoke("StartNextWave", 5f);
+        Invoke("StartNextWave", 5f);
     }
 
     #endregion
@@ -97,9 +90,9 @@ public class WaveHandler : MonoBehaviour
     #region Methods
 
     public void StartNextWave() {
-        if (enemies.Count <= 0) {
-            wave++;
-            Debug.Log("Starting Wave " + (wave + 1).ToString());
+        if (_enemies.Count <= 0) {
+            _wave++;
+            Debug.Log("Starting Wave " + (_wave + 1).ToString());
 
             StartCoroutine(SpawnEnemies());
         } else {
@@ -108,18 +101,15 @@ public class WaveHandler : MonoBehaviour
     }
 
     public void CheckWaveStatus() {
-        if (enemies.Count <= 0) {
-            Debug.Log("Wave " + (wave + 1).ToString() + " Finished");
-            if (upgrader != null) {
-                upgrader.OfferUpgrade(wave);
-            } 
-            //Invoke("StartNextWave", 3f);
+        if (_enemies.Count <= 0) {
+            Debug.Log("Wave " + (_wave + 1).ToString() + " Finished");
+            Invoke("StartNextWave", 3f);
         }
     }
 
     public void EnemyKilled(GameObject enemy) {
-        if (enemies.Contains(enemy)) {
-            enemies.Remove(enemy);
+        if (_enemies.Contains(enemy)) {
+            _enemies.Remove(enemy);
         }
         CheckWaveStatus();
     }
@@ -130,8 +120,8 @@ public class WaveHandler : MonoBehaviour
     }
 
     public LinearScaling GetLinearScale() {
-        foreach (LinearScaling ls in scaling) {
-            if (wave >= ls.MinWave) {
+        foreach (LinearScaling ls in _scaling) {
+            if (_wave >= ls.MinWave) {
                 return ls;
             }
         }
@@ -139,13 +129,13 @@ public class WaveHandler : MonoBehaviour
     }
 
     public int GetWave() {
-        return wave + 1;
+        return _wave + 1;
     }
 
     private IEnumerator SpawnEnemies() {
 
-        if (wave < waves.Count) {
-            Wave currentWave = waves[wave];
+        if (_wave < _waves.Count) {
+            Wave currentWave = _waves[_wave];
             if (currentWave != null) {
                 int totalWeight = 0;
                 for (int i = 0; i < currentWave.spawnTable.Count; i++) {
@@ -168,7 +158,7 @@ public class WaveHandler : MonoBehaviour
                     totalWeight += linearScaling.enemySpawnTable[i].weight;
                 }
 
-                for (int i = 0; i < Mathf.FloorToInt(linearScaling.enemiesSpawnAmount * linearScaling.enemiesSpawnScale * (wave + 1)); i++) {
+                for (int i = 0; i < Mathf.FloorToInt(linearScaling.enemiesSpawnAmount * linearScaling.enemiesSpawnScale * (_wave + 1)); i++) {
                     yield return new WaitForSeconds(linearScaling.spawnSpeed);
                     for (int j = 0; j < linearScaling.spawnAmountOnInterval; j++) {
                         Spawn(GetRandom(linearScaling.enemySpawnTable, totalWeight));
@@ -189,7 +179,7 @@ public class WaveHandler : MonoBehaviour
         Enemy enemy = e.GetComponent<Enemy>();
         enemy.waveHandler = this;
         e.transform.position = Position;
-        enemies.Add(e);
+        _enemies.Add(e);
     }
     private void Spawn(GameObject Enemy, EnemyScaling enemyScaling) {
 
@@ -201,9 +191,9 @@ public class WaveHandler : MonoBehaviour
         GameObject e = Instantiate(Enemy);
         Enemy enemy = e.GetComponent<Enemy>();
         enemy.waveHandler = this;
-        enemy.ScaleHealth(enemyScaling.healthScale * wave);
+        enemy.ScaleHealth(enemyScaling.healthScale * _wave);
         e.transform.position = Position;
-        enemies.Add(e);
+        _enemies.Add(e);
     }
 
     private GameObject GetRandom(List<SpawnTableItem> spawnableEnemies,  int totalWeight) {

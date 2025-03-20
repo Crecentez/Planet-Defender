@@ -580,7 +580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &244492621
 RectTransform:
   m_ObjectHideFlags: 0
@@ -650,7 +650,7 @@ MonoBehaviour:
         m_MethodName: addTurrent
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
+          m_ObjectArgument: {fileID: 3339097972596038305, guid: c807277a543def44a81aee8d8c85bcc0, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -1431,7 +1431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1276065921
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1458,7 +1458,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276065920}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0643bd3b3daaceb46a71d61f5dce4d47, type: 3}
   m_Name: 
@@ -1614,30 +1614,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea56db15c343324282570fb36e27ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgrader: {fileID: 1276065922}
-  waves:
-  - spawnTable:
-    - weight: 20
-      enemy: {fileID: 3289616820698895754, guid: 6a81ec8fc10b57d4ab018b504057bd5d, type: 3}
-    spawnIntervals: 5
-    spawnSpeed: 1
-    intervalSpawnAmount: 2
-  - spawnTable:
-    - weight: 20
-      enemy: {fileID: 3289616820698895754, guid: 6a81ec8fc10b57d4ab018b504057bd5d, type: 3}
-    spawnIntervals: 10
-    spawnSpeed: 1
-    intervalSpawnAmount: 2
-  defaultWave:
+  _waves: []
+  _defaultWave:
     spawnTable: []
     spawnIntervals: 5
     spawnSpeed: 1
     intervalSpawnAmount: 2
-  scaling: []
-  wave: -1
+  _scaling: []
+  _wave: -1
   MinSpawnRadius: 11
   MaxSpawnRadius: 16
-  enemies: []
+  _enemies: []
 --- !u!1 &1487631943
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,34 +2084,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1965443239}
   - component: {fileID: 1965443238}
-  - component: {fileID: 1965443237}
+  - component: {fileID: 1965443240}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1965443237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1965443236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_IsActive: 0
 --- !u!114 &1965443238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2155,6 +2122,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1965443240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965443236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1001 &8134139272415756850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2163,6 +2161,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 236338588233174770, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 236338588233174770, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: _outOfBoundsWarning
       value: 
