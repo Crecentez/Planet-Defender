@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Gun : Attatchement
+public class BasicGun : Attatchement
 {
 
     #region Classes
@@ -32,7 +32,7 @@ public class Gun : Attatchement
     private InputAction _fireInput;
 
     private Planet planet;
-    private bool _canFire = true;
+    private bool _canFire = false;
 
     #endregion
 
@@ -42,11 +42,13 @@ public class Gun : Attatchement
         _input = new GameInputMap();
         _input.Gun.Enable();
         _fireInput = _input.Gun.Fire;
+        _canFire = true;
     }
 
     private void OnDisable() {
         _input.Gun.Disable();
         _input = null;
+        _canFire = false;
     }
 
     private void Start() {
