@@ -11,9 +11,28 @@ public class AttatchementHandler : MonoBehaviour
 
     [SerializeField] private List<AttatchementConnection> _attatchements = new List<AttatchementConnection>();
     
-    [SerializeField] PlayerController _controller;
+    //[SerializeField] PlayerController _controller;
+
+    [Header("Testing")]
+    [SerializeField] private List<GameObject> _attatchementPrefabs = new List<GameObject>();
 
     private const float GizmosSize = 0.1f;
+
+
+
+    #endregion
+
+    #region Unity Methods
+
+    private void Start() {
+        foreach (GameObject go in _attatchementPrefabs) {
+            if (AddAttatchement(go) != null) {
+                Debug.Log("Attatchement Added");
+            } else {
+                Debug.Log("Attatchement not Added");
+            }
+        }
+    }
 
     #endregion
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlaySpaceBorder : MonoBehaviour
 {
 
@@ -13,8 +14,8 @@ public class PlaySpaceBorder : MonoBehaviour
     [SerializeField] private PlayerController _controller;
 
 
-    [SerializeField] private bool showGizmos = false;
-    [SerializeField] private float flashTime = 1f;
+    [SerializeField] private bool _showGizmos = false;
+    [SerializeField] private float _flashTime = 1f;
 
     private Coroutine _warningCoroutine;
 
@@ -23,15 +24,13 @@ public class PlaySpaceBorder : MonoBehaviour
     #region Unity Methods
 
     private void Update() {
-        if (OutOfBounds()) 
+        if (OutOfBounds()) {
             StartWarning();
-        else 
-            StopWarning();
-        
+            if (InLethalZone())
+                _controller.Kill();
 
-        if (InLethalZone()) {
-            _controller.Kill();
-        }
+        } else StopWarning();
+        
     }
 
     #endregion
@@ -40,7 +39,7 @@ public class PlaySpaceBorder : MonoBehaviour
 
     private void StartWarning() {
         if (_warningCoroutine == null) {
-            StartCoroutine(WarningLoop());
+            _warningCoroutine = StartCoroutine(WarningLoop());
         }
     }
 
@@ -56,12 +55,8 @@ public class PlaySpaceBorder : MonoBehaviour
         _outOfBoundsWarning.SetActive(true);
         while (true) {
             _outOfBoundsWarning.SetActive(!_outOfBoundsWarning.activeInHierarchy);
-            yield return new WaitForSeconds(flashTime);
+            yield return new WaitForSeconds(_flashTime);
         }
-    }
-
-    private void warn() {
-        
     }
 
     private bool OutOfBounds() {
@@ -89,7 +84,7 @@ public class PlaySpaceBorder : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
-        if (showGizmos) {
+        if (_showGizmos) {
 
             Vector3[] safeZonePoints = new Vector3[4] {
                 new Vector3(_safeZone.x / 2, _safeZone.y / 2, 0),

@@ -32,6 +32,7 @@ public class ProjectileBasic : Projectile
     #region Unity Methods
 
     private void Start() {
+        
         rb = GetComponent<Rigidbody2D>();
         if (rb == null ) {
             Debug.LogWarning("RigidBody2D not found!");
@@ -46,6 +47,7 @@ public class ProjectileBasic : Projectile
         //}
 
         rb.linearVelocity = new Vector2(transform.up.x, transform.up.y) * settings.speed;
+        StartLifeTimer();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

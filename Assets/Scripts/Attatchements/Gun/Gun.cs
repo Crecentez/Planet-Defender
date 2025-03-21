@@ -32,7 +32,7 @@ public class Gun : Attatchement
     private InputAction _fireInput;
 
     private Planet planet;
-    private bool _canFire = false;
+    private bool _canFire = true;
 
     #endregion
 

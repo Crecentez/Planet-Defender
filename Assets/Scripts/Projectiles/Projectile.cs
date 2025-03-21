@@ -18,8 +18,9 @@ public class Projectile : MonoBehaviour
 
     #region Variables
 
-    [EnumFlags]
-    public CanDamageTypes canDamageTypes = CanDamageTypes.Enemy;
+    [EnumFlags] public CanDamageTypes canDamageTypes = CanDamageTypes.Enemy;
+
+    private const float LIFE_TIME = 8f;
 
     //private Gun gun;
     //private Planet planet;
@@ -29,6 +30,7 @@ public class Projectile : MonoBehaviour
     #region Unity Methods
 
     private void Start() {
+        StartLifeTimer();
         //GameObject planet_gm = GameObject.FindGameObjectWithTag("Planet");
         //if (planet_gm != null) {
         //    planet = planet_gm.GetComponent<Planet>();
@@ -40,6 +42,18 @@ public class Projectile : MonoBehaviour
     #endregion
 
     #region Methods
+
+    protected void StartLifeTimer() {
+        StartCoroutine(LifeTimeTimer(LIFE_TIME));
+    }
+    protected void StartLifeTimer(float lifeTime) {
+        StartCoroutine(LifeTimeTimer(lifeTime));
+    }
+
+    private IEnumerator LifeTimeTimer(float lifeTime) {
+        yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
+    }
 
     protected void ApplyKnockback(GameObject gm, Vector2 Knockback) {
         Rigidbody2D other_rb = gm.GetComponent<Rigidbody2D>();

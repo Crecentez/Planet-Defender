@@ -227,7 +227,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 30
   _movement: {fileID: 5092904605966594902}
-  _input: {fileID: 0}
   _attatchement: {fileID: 3842440547957563118}
   _border: {fileID: 236338588233174770}
   _camera: {fileID: 0}
@@ -258,12 +257,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5532c33c9ae0de4f89ca8bbc79612a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _safeZone: {x: 0, y: 0}
-  _lethalBorder: {x: 1, y: 1}
+  _safeZone: {x: 66, y: 36}
+  _lethalBorder: {x: 73, y: 43}
   _outOfBoundsWarning: {fileID: 0}
   _controller: {fileID: 3375314038982487692}
-  showGizmos: 0
-  flashTime: 1
+  _showGizmos: 1
+  _flashTime: 1
 --- !u!114 &3842440547957563118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +285,7 @@ MonoBehaviour:
   - offset: {x: 0, y: 0, z: 0}
     type: 2
     attatchement: {fileID: 0}
-  _controller: {fileID: 3375314038982487692}
+  _attatchementPrefabs: []
 --- !u!50 &5029692858020898260
 Rigidbody2D:
   serializedVersion: 5
@@ -409,7 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 37e2af4cd3a6c8e499fde2949c44488f, type: 3}
-  m_NotificationBehavior: 3
+  m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 518432470342773957}
   m_DeviceLostEvent:
     m_PersistentCalls:

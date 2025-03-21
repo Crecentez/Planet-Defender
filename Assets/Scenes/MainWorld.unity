@@ -2162,29 +2162,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 236338588233174770, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 236338588233174770, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: _outOfBoundsWarning
       value: 
       objectReference: {fileID: 1699517635}
-    - target: {fileID: 2005174429790731476, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
-      propertyPath: m_NotificationBehavior
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375314038982487692, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
-      propertyPath: _input
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3375314038982487692, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: _camera
       value: 
       objectReference: {fileID: 1223605095}
-    - target: {fileID: 5092904605966594902, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
-      propertyPath: _input
-      value: 
+    - target: {fileID: 3842440547957563118, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: _attatchementPrefabs.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3842440547957563118, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: '_attatchementPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2379431994671116765, guid: 30812ddff4c8de44db51b8f7651c1b1e, type: 3}
+    - target: {fileID: 3842440547957563118, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: '_attatchementPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2379431994671116765, guid: 30812ddff4c8de44db51b8f7651c1b1e, type: 3}
     - target: {fileID: 8350990969246029462, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

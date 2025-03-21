@@ -52,7 +52,7 @@ MonoBehaviour:
     fireRate: 0.5
     offset: {x: 0, y: 0.05}
     rotation: 0
-  BulletPrefab: {fileID: 7917688255547569854, guid: af543bc13271bb3458cb67803efd6c62, type: 3}
+  _bulletPrefab: {fileID: 7917688255547569854, guid: af543bc13271bb3458cb67803efd6c62, type: 3}
 --- !u!1 &5628950409534378839
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +102,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

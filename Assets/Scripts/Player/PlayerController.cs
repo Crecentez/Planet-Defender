@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Kill() {
-        if (!isDead)
+        if (isDead)
             return;
 
         health = 0;
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public IEnumerator RestartGame() {
+        Debug.Log("Restarting Scene");
         yield return new WaitForSeconds(3f);
         yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
