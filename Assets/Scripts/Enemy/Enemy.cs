@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
 
 
     public void Damage(int amount) {
-        Debug.Log("Was at " + Health.ToString() + " | Now at " + (Health - amount).ToString());
+        //Debug.Log("Was at " + Health.ToString() + " | Now at " + (Health - amount).ToString());
         Health -= amount;
         //Debug.Log(Health);
 
@@ -47,13 +47,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void DamagePlayer(int amount) {
-        GameObject player = GameObject.FindWithTag("Player");
+    protected void DoDamage(PlayerController playerController, int amount) {
+        playerController.Damage(amount);
+    }
 
-        if (player != null) {
-            PlayerController pc = player.GetComponent<PlayerController>();
-
-            pc.Damage(amount);
-        }
+    protected void DoDamage(Planet planet, int amount) {
+        planet.Damage(amount);
     }
 }

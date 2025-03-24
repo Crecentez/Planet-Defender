@@ -54,17 +54,18 @@ public class Charger : Enemy
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Player") {
-            DamagePlayer(Settings.PlayerDamage);
-            ApplyKnockback(transform.position, collision.gameObject.GetComponent<Rigidbody2D>(), Settings.PlayerKnockback);
+        GameObject gm = collision.gameObject;
+        if (gm.CompareTag("Player") && gm.GetComponent<PlayerController>()) {
+            PlayerController pc = gm.GetComponent<PlayerController>();
+            DoDamage(pc, Settings.PlayerDamage);
+            ApplyKnockback(transform.position, gm.GetComponent<Rigidbody2D>(), Settings.PlayerKnockback);
             Damage(Mathf.FloorToInt(Settings.PlayerDamage * playerDamageScale));
-            ApplyKnockback(collision.gameObject.transform.position, rb, Settings.SelfKnockback);
-        } else if (collision.gameObject.tag == "Planet") {
-
-            // Damage Planet Here
-
+            ApplyKnockback(gm.transform.position, rb, Settings.SelfKnockback);
+        } else if (gm.CompareTag("Player") && gm.GetComponent<Planet>()) {
+            Planet planet = gm.GetComponent<Planet>();
+            DoDamage(planet, Settings.PlanetDamage);
             Damage(Mathf.FloorToInt(Settings.PlanetDamage * planetDamageScale));
-            ApplyKnockback(collision.gameObject.transform.position, rb, Settings.SelfKnockback);
+            ApplyKnockback(gm.transform.position, rb, Settings.SelfKnockback);
         }
     }
 

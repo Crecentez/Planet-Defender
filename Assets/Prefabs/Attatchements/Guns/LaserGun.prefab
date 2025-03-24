@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3742901868618126004}
-  - component: {fileID: 3671530697117680252}
+  - component: {fileID: 2301273686289199138}
   - component: {fileID: 4105401126310348305}
   m_Layer: 0
   m_Name: LaserGun
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 6586227655432573325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3671530697117680252
+--- !u!114 &2301273686289199138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,17 +44,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2379431994671116765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b32ea6a0c8ff7446bdea458ce4d5b40, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bf14f68ab32f3e44a2d0700ce292be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Basic Gun
-  _description: Shoots weak bullets at a slow rate of fire
+  _name: Laser Gun
+  _description: Shoots a constant laser
   _type: 1
-  settings:
-    fireRate: 0.5
-    offset: {x: 0, y: 0.06}
-    rotation: 0
-  _bulletPrefab: {fileID: 7917688255547569854, guid: af543bc13271bb3458cb67803efd6c62, type: 3}
+  _damage: 10
+  _damageSpeed: 0.1
+  _maxRange: 8
+  _offset: {x: 0, y: 0}
+  _mask:
+    serializedVersion: 2
+    m_Bits: 320
+  _lineRenderer: {fileID: 4105401126310348305}
 --- !u!120 &4105401126310348305
 LineRenderer:
   serializedVersion: 2
