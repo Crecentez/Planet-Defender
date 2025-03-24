@@ -73,8 +73,8 @@ public class WaveHandler : MonoBehaviour
     [SerializeField] private int _wave = -1;
 
     [Header("Spawning")]
-    public float MinSpawnRadius = 10f;
-    public float MaxSpawnRadius = 15f;
+    [SerializeField] private float _minSpawnRadius = 10f;
+    [SerializeField] private float _maxSpawnRadius = 15f;
     [SerializeField] private List<GameObject> _enemies = new List<GameObject>();
 
     #endregion
@@ -171,7 +171,7 @@ public class WaveHandler : MonoBehaviour
     private void Spawn(GameObject Enemy) {
 
         float dir = UnityEngine.Random.Range(0, 360) * Mathf.Deg2Rad;
-        float distance = UnityEngine.Random.Range(Mathf.FloorToInt(MinSpawnRadius * 100), Mathf.FloorToInt(MaxSpawnRadius * 100)) / 100;
+        float distance = UnityEngine.Random.Range(Mathf.FloorToInt(_minSpawnRadius * 100), Mathf.FloorToInt(_maxSpawnRadius * 100)) / 100;
 
         Vector2 Position = new Vector2(Mathf.Cos(dir) * distance, Mathf.Sin(dir) * distance) + new Vector2(transform.position.x, transform.position.y);
 
@@ -184,7 +184,7 @@ public class WaveHandler : MonoBehaviour
     private void Spawn(GameObject Enemy, EnemyScaling enemyScaling) {
 
         float dir = UnityEngine.Random.Range(0, 360) * Mathf.Deg2Rad;
-        float distance = UnityEngine.Random.Range(Mathf.FloorToInt(MinSpawnRadius * 100), Mathf.FloorToInt(MaxSpawnRadius * 100)) / 100;
+        float distance = UnityEngine.Random.Range(Mathf.FloorToInt(_minSpawnRadius * 100), Mathf.FloorToInt(_maxSpawnRadius * 100)) / 100;
 
         Vector2 Position = new Vector2(Mathf.Cos(dir) * distance, Mathf.Sin(dir) * distance) + new Vector2(transform.position.x, transform.position.y);
 
@@ -218,12 +218,12 @@ public class WaveHandler : MonoBehaviour
     #region Gizmos
 
     private void OnDrawGizmosSelected() {
-        if (MinSpawnRadius > MaxSpawnRadius) { MaxSpawnRadius = MinSpawnRadius + 1; }
+        if (_minSpawnRadius > _maxSpawnRadius) { _maxSpawnRadius = _minSpawnRadius + 1; }
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, MaxSpawnRadius);
+        Gizmos.DrawWireSphere(transform.position, _maxSpawnRadius);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, MinSpawnRadius);
+        Gizmos.DrawWireSphere(transform.position, _minSpawnRadius);
     }
 
     #endregion

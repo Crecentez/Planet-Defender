@@ -21,10 +21,10 @@ public class PlayerMovement : MonoBehaviour
 
 
     // Private
-    [SerializeField] private InputHandler _input;
     [SerializeField] private PlayerController _controller;
     [SerializeField] private Rigidbody2D _rb;
 
+    private GameInputMap _input;
     private InputAction _moveInput;
     private InputAction _boostInput;
 
@@ -35,13 +35,15 @@ public class PlayerMovement : MonoBehaviour
     #region Unity Methods
 
     private void OnEnable() {
-        InputSystemActions.Instance.Player.Enable();
-        _moveInput = InputSystemActions.Instance.Player.Move;
-        _boostInput = InputSystemActions.Instance.Player.Boost;
+        _input = new GameInputMap();
+        _input.Player.Enable();
+        _moveInput = _input.Player.Move;
+        _boostInput = _input.Player.Boost;
     }
 
     private void OnDisable() {
-        InputSystemActions.Instance.Player.Disable();
+        _input.Player.Disable();
+        _input = null;
     }
 
     private void Update()
@@ -81,22 +83,6 @@ public class PlayerMovement : MonoBehaviour
         } else if (input.y < 0) {
             _rb.AddForce(new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * Time.deltaTime * (accel * -0.75f));
         }
-
-        //int steerDir = getXAxisInput();
-        //gameObject.transform.eulerAngles = new Vector3(0, 0, gameObject.transform.eulerAngles.z + SteerSpeed * Time.deltaTime * steerDir);
-
-        //float accel = Acceleration;
-
-        //if (_input.Boost.GetKey())
-        //    accel = BoostAcceleration;
-
-        //if (_input.ForwardGas.GetKey())
-        //{
-        //    _rb.AddForce(new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * Time.deltaTime * accel);
-        //} else if (_input.BackwardGas.GetKey())
-        //{
-        //    _rb.AddForce(new Vector2(gameObject.transform.up.x, gameObject.transform.up.y) * Time.deltaTime * (accel * -0.75f));
-        //}
     }
 
     private Vector2 getMoveInput() {

@@ -295,6 +295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 8100691668094866613, guid: eefd61573991bc3488bb8f6a7a900758, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -641,7 +645,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 224609617}
         m_TargetAssemblyTypeName: Planet, Assembly-CSharp
-        m_MethodName: addTurrent
+        m_MethodName: AddTurrent
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 3339097972596038305, guid: c807277a543def44a81aee8d8c85bcc0, type: 3}
@@ -1904,7 +1908,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 224609617}
         m_TargetAssemblyTypeName: Planet, Assembly-CSharp
-        m_MethodName: addTurrent
+        m_MethodName: AddTurrent
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 3339097972596038305, guid: 5c20ed015b951e747b4c618e05a89e87, type: 3}
@@ -2148,6 +2152,22 @@ PrefabInstance:
       propertyPath: _outOfBoundsWarning
       value: 
       objectReference: {fileID: 1699517635}
+    - target: {fileID: 518432470342773957, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: m_MoveAction
+      value: 
+      objectReference: {fileID: -8532355220956892266, guid: 9cfadddc8de8451499a1f4ffb8a3d18d, type: 3}
+    - target: {fileID: 518432470342773957, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: m_ActionsAsset
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 9cfadddc8de8451499a1f4ffb8a3d18d, type: 3}
+    - target: {fileID: 2005174429790731476, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 9cfadddc8de8451499a1f4ffb8a3d18d, type: 3}
+    - target: {fileID: 2005174429790731476, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3375314038982487692, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: _camera
       value: 
@@ -2163,11 +2183,15 @@ PrefabInstance:
     - target: {fileID: 3842440547957563118, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: '_attatchementPrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 2379431994671116765, guid: cf85671eed049454ba4b68dc55cc356a, type: 3}
+      objectReference: {fileID: 2379431994671116765, guid: 061aa8439ff3a084c9cb8fee6bd0f3bd, type: 3}
     - target: {fileID: 3842440547957563118, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: '_attatchementPrefabs.Array.data[1]'
       value: 
-      objectReference: {fileID: 2379431994671116765, guid: cf85671eed049454ba4b68dc55cc356a, type: 3}
+      objectReference: {fileID: 2379431994671116765, guid: 061aa8439ff3a084c9cb8fee6bd0f3bd, type: 3}
+    - target: {fileID: 6733029498637940668, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8350990969246029462, guid: bdb8c1815c988b44ea4825055c213fb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

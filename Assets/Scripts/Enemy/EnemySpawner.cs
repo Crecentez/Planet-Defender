@@ -5,52 +5,60 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+
+    #region Classes
+
     [Serializable]
     private class SpawnTableItem {
         
         public int weight = 1;
         public GameObject enemy;
 
-    } 
-
-    public float MinSpawnRadius = 10f;
-    public float MaxSpawnRadius = 15f;
-
-    public float SpawnRate = 5f;
-
-    public bool canSpawn = true;
-
-    [SerializeField]
-    private List<SpawnTableItem> Enemies = new List<SpawnTableItem>();
-
-    private void Start() {
-        spawnLoop();
     }
 
-    public void spawnLoop() {
-        if (canSpawn) {
+    #endregion
+
+    #region Varaibles
+
+    [SerializeField] private float _minSpawnRadius = 10f;
+    [SerializeField] private float _maxSpawnRadius = 15f;
+
+    [SerializeField] private float _spawnRate = 5f;
+
+    [SerializeField] private bool _canSpawn = true;
+
+    [SerializeField] private List<SpawnTableItem> _enemies = new List<SpawnTableItem>();
+
+    #endregion
+
+    private void Start() {
+        SpawnLoop();
+    }
+
+    public void SpawnLoop() {
+        if (_canSpawn) {
             SpawnRandom();
         }
         
-        Invoke("spawnLoop", SpawnRate);
+        Invoke("spawnLoop", _spawnRate);
     }
 
     public void SpawnRandom() {
         int totalWeight = 0;
 
-        for (int i = 0; i < Enemies.Count; i++) {
-            totalWeight += Enemies[i].weight;
+        for (int i = 0; i < _enemies.Count; i++) {
+            totalWeight += _enemies[i].weight;
         }
         
         int number = UnityEngine.Random.Range(0, totalWeight);
 
-        for (int i = 0; i < Enemies.Count; i++) {
+        for (int i = 0; i < _enemies.Count; i++) {
             
-            if (Enemies[i].weight >= number) {
-                Spawn(Enemies[i].enemy);
+            if (_enemies[i].weight >= number) {
+                Spawn(_enemies[i].enemy);
                 break;
             } else {
-                number -= Enemies[i].weight;
+                number -= _enemies[i].weight;
             }
         }
 
@@ -59,7 +67,7 @@ public class EnemySpawner : MonoBehaviour
     public void Spawn(GameObject Enemy) {
 
         float dir = UnityEngine.Random.Range(0, 360) * Mathf.Deg2Rad;
-        float distance = UnityEngine.Random.Range(Mathf.FloorToInt(MinSpawnRadius * 100), Mathf.FloorToInt(MaxSpawnRadius * 100))/100;
+        float distance = UnityEngine.Random.Range(Mathf.FloorToInt(_minSpawnRadius * 100), Mathf.FloorToInt(_maxSpawnRadius * 100))/100;
 
         Vector2 Position = new Vector2(Mathf.Cos(dir) * distance, Mathf.Sin(dir) * distance) + new Vector2(transform.position.x, transform.position.y);
 
