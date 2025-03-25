@@ -30,8 +30,7 @@ public class ProjectileWave : Projectile
     private Vector3 moveDir;
     private Vector3 rightDir;
     private Vector3 position;
-    private float timePassed;
-    private float offset;
+    private float timePassed = 0f;
 
     private Rigidbody2D rb;
     //private Planet planet;
@@ -44,7 +43,7 @@ public class ProjectileWave : Projectile
         position = transform.position;
         moveDir = transform.up;
         rightDir = transform.right;
-        offset = Random.Range(0, 40) / 10;
+        timePassed += (Random.Range(0, 2) * Mathf.PI) / settings.waveLength;
         StartLifeTimer();
     }
 
@@ -79,7 +78,7 @@ public class ProjectileWave : Projectile
 
     private double GetOffset(float dt) {
         timePassed += dt;
-        return settings.waveIntensity * Math.Sin(settings.waveLength * (timePassed + offset));
+        return settings.waveIntensity * Math.Sin(settings.waveLength * timePassed);
     }
 
     #endregion

@@ -342,6 +342,45 @@ public partial class @GameInputMap: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Shield"",
+            ""id"": ""0089b2c2-d8e9-4f12-85d3-c7f8663f0c3f"",
+            ""actions"": [
+                {
+                    ""name"": ""Regenerate"",
+                    ""type"": ""Button"",
+                    ""id"": ""470c0a8f-9817-48e4-b50e-6e1a6f13e45b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""97e81b93-5e67-47c7-942b-d77d21c3ad62"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Regenerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3dccac43-7f86-4406-934c-884f31dad02c"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Regenerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -357,6 +396,9 @@ public partial class @GameInputMap: IInputActionCollection2, IDisposable
         // Gun
         m_Gun = asset.FindActionMap("Gun", throwIfNotFound: true);
         m_Gun_Fire = m_Gun.FindAction("Fire", throwIfNotFound: true);
+        // Shield
+        m_Shield = asset.FindActionMap("Shield", throwIfNotFound: true);
+        m_Shield_Regenerate = m_Shield.FindAction("Regenerate", throwIfNotFound: true);
     }
 
     ~@GameInputMap()
@@ -364,6 +406,7 @@ public partial class @GameInputMap: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, GameInputMap.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInputMap.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Gun.enabled, "This will cause a leak and performance issues, GameInputMap.Gun.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Shield.enabled, "This will cause a leak and performance issues, GameInputMap.Shield.Disable() has not been called.");
     }
 
     /// <summary>
@@ -745,6 +788,102 @@ public partial class @GameInputMap: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="GunActions" /> instance referencing this action map.
     /// </summary>
     public GunActions @Gun => new GunActions(this);
+
+    // Shield
+    private readonly InputActionMap m_Shield;
+    private List<IShieldActions> m_ShieldActionsCallbackInterfaces = new List<IShieldActions>();
+    private readonly InputAction m_Shield_Regenerate;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Shield".
+    /// </summary>
+    public struct ShieldActions
+    {
+        private @GameInputMap m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public ShieldActions(@GameInputMap wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Shield/Regenerate".
+        /// </summary>
+        public InputAction @Regenerate => m_Wrapper.m_Shield_Regenerate;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Shield; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="ShieldActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(ShieldActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="ShieldActions" />
+        public void AddCallbacks(IShieldActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ShieldActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ShieldActionsCallbackInterfaces.Add(instance);
+            @Regenerate.started += instance.OnRegenerate;
+            @Regenerate.performed += instance.OnRegenerate;
+            @Regenerate.canceled += instance.OnRegenerate;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="ShieldActions" />
+        private void UnregisterCallbacks(IShieldActions instance)
+        {
+            @Regenerate.started -= instance.OnRegenerate;
+            @Regenerate.performed -= instance.OnRegenerate;
+            @Regenerate.canceled -= instance.OnRegenerate;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="ShieldActions.UnregisterCallbacks(IShieldActions)" />.
+        /// </summary>
+        /// <seealso cref="ShieldActions.UnregisterCallbacks(IShieldActions)" />
+        public void RemoveCallbacks(IShieldActions instance)
+        {
+            if (m_Wrapper.m_ShieldActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="ShieldActions.AddCallbacks(IShieldActions)" />
+        /// <seealso cref="ShieldActions.RemoveCallbacks(IShieldActions)" />
+        /// <seealso cref="ShieldActions.UnregisterCallbacks(IShieldActions)" />
+        public void SetCallbacks(IShieldActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ShieldActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ShieldActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="ShieldActions" /> instance referencing this action map.
+    /// </summary>
+    public ShieldActions @Shield => new ShieldActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -803,5 +942,20 @@ public partial class @GameInputMap: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFire(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Shield" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="ShieldActions.AddCallbacks(IShieldActions)" />
+    /// <seealso cref="ShieldActions.RemoveCallbacks(IShieldActions)" />
+    public interface IShieldActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Regenerate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRegenerate(InputAction.CallbackContext context);
     }
 }

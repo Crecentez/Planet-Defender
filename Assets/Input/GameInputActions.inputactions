@@ -256,6 +256,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Shield",
+            "id": "0089b2c2-d8e9-4f12-85d3-c7f8663f0c3f",
+            "actions": [
+                {
+                    "name": "Regenerate",
+                    "type": "Button",
+                    "id": "470c0a8f-9817-48e4-b50e-6e1a6f13e45b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "97e81b93-5e67-47c7-942b-d77d21c3ad62",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Regenerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3dccac43-7f86-4406-934c-884f31dad02c",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Regenerate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
