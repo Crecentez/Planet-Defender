@@ -72,7 +72,6 @@ public class AttatchementHandler : MonoBehaviour
 
     private void OnDrawGizmosSelected() {
         Gizmos.matrix = transform.localToWorldMatrix;
-        Gizmos.color = Color.blue;
         foreach (AttatchementConnection ac in _attatchements) {
             switch (ac.type) {
                 case Attatchement.AttatchementType.Gun:
