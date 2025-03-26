@@ -28,14 +28,14 @@ public class Attatchement : MonoBehaviour
 
     #region Methods
 
-    public void Attatch(Transform parent, Vector3 localPosition) {
+    public virtual void Attatch(Transform parent, Vector3 localPosition) {
         transform.parent = parent;
         transform.localPosition = localPosition;
     }
 
 
     public string GetName() { return _name; }
-    public string GetDescription() { return _description; }
+    public virtual string GetDescription() { return _description; }
     public AttatchementType GetAttatchementType() {  return _type; }
 
     #endregion

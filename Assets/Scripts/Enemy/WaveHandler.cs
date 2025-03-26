@@ -199,7 +199,7 @@ public class WaveHandler : MonoBehaviour
     private GameObject GetRandom(List<SpawnTableItem> spawnableEnemies,  int totalWeight) {
         
 
-        int number = UnityEngine.Random.Range(0, totalWeight);
+        int number = UnityEngine.Random.Range(0, totalWeight + 1);
 
         for (int i = 0; i < spawnableEnemies.Count; i++) {
 
