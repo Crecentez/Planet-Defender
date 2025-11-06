@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b621edc876bfa9b4c9cbd2dc5eac3717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 30
+  MaxHealth: 10
   playerDamageScale: 1
   planetDamageScale: 1
   waveHandler: {fileID: 0}
