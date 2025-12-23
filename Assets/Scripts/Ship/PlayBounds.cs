@@ -1,0 +1,151 @@
+using System.Collections;
+using UnityEngine;
+
+namespace Ship {
+    [RequireComponent(typeof(Ship))]
+    public class PlayBounds : MonoBehaviour {
+        #region Variables
+        [SerializeField] private Vector2 _safeZone = Vector2.zero;
+        [SerializeField] private Vector2 _lethalBorder = Vector2.one;
+
+        [SerializeField] private GameObject _outOfBoundsWarning;
+        private Ship _ship;
+
+        [SerializeField] private bool _showGizmos = false;
+        [SerializeField] private float _flashTime = 1f;
+        [SerializeField] private int _killTime = 10;
+
+        private Coroutine _warningCoroutine;
+        private Coroutine _killCoroutine;
+
+        #endregion
+
+        #region Unity Methods
+
+        private void Start() {
+            _ship = GetComponent<Ship>();
+            if (_outOfBoundsWarning == null) {
+                Debug.LogWarning("OutOfBoundsWarning GameObject not Found!");
+                
+            }
+        }
+
+        private void Update() {
+            if (OutOfBounds()) {
+                StartWarning();
+                //if (InLethalZone())
+                //    _ship.Kill();   
+
+            } else StopWarning();
+
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void StartWarning() {
+            if (_outOfBoundsWarning != null) {
+                if (_warningCoroutine == null) {
+                    _warningCoroutine = StartCoroutine(WarningLoop());
+                }
+                if (_killCoroutine == null) {
+                    _killCoroutine = StartCoroutine(KillTimer());
+                }
+            } 
+                
+
+        }
+
+        private void StopWarning() {
+            if (_warningCoroutine != null) {
+                StopCoroutine(_warningCoroutine);
+                _warningCoroutine = null;
+                if (_outOfBoundsWarning != null) 
+                    _outOfBoundsWarning.SetActive(false);
+            }
+            if (_killCoroutine != null) {
+                StopCoroutine(_killCoroutine);
+                _killCoroutine = null;
+            }
+        }
+
+        private IEnumerator WarningLoop() {
+            if (_outOfBoundsWarning != null) {
+                _outOfBoundsWarning.SetActive(true);
+                GameObject bgimage = _outOfBoundsWarning.transform.Find("BGImage")?.gameObject;
+                
+                while (true) {
+                    if (bgimage != null) {
+                        _outOfBoundsWarning.SetActive(true);
+                        bgimage.SetActive(!bgimage.activeInHierarchy);
+                    } else {
+                        _outOfBoundsWarning.SetActive(!_outOfBoundsWarning.activeInHierarchy);
+                    }
+                    yield return new WaitForSeconds(_flashTime);
+                }
+            }
+
+            
+        }
+
+        private IEnumerator KillTimer() {
+            yield return new WaitForSeconds(_killTime);
+            if (OutOfBounds()) {
+                _ship.Kill();
+            }
+        }
+
+        private bool OutOfBounds() {
+            bool oobX = transform.position.x > (_safeZone.x / 2) || transform.position.x < -(_safeZone.x / 2);
+            bool oobY = transform.position.y > (_safeZone.y / 2) || transform.position.y < -(_safeZone.y / 2);
+            return oobX || oobY;
+        }
+
+        private bool InLethalZone() {
+            bool oobX = transform.position.x > (_lethalBorder.x / 2) || transform.position.x < -(_lethalBorder.x / 2);
+            bool oobY = transform.position.y > (_lethalBorder.y / 2) || transform.position.y < -(_lethalBorder.y / 2);
+            return oobX || oobY;
+        }
+
+        #endregion
+
+        #region Gizmos
+        private void GizmosDrawRectangle(Vector3[] points) {
+            for (int i = 0; i < points.Length; i++) {
+                if (i + 1 < points.Length) {
+                    Gizmos.DrawLine(points[i], points[i + 1]);
+                }
+            }
+            Gizmos.DrawLine(points[points.Length - 1], points[0]);
+        }
+
+        private void OnDrawGizmos() {
+            if (_showGizmos) {
+
+                Vector3[] safeZonePoints = new Vector3[4] {
+                new Vector3(_safeZone.x / 2, _safeZone.y / 2, 0),
+                new Vector3(-_safeZone.x / 2, _safeZone.y / 2, 0),
+                new Vector3(-_safeZone.x / 2, -_safeZone.y / 2, 0),
+                new Vector3(_safeZone.x / 2, -_safeZone.y / 2, 0)
+            };
+
+                Gizmos.color = Color.yellow;
+                GizmosDrawRectangle(safeZonePoints);
+
+                Vector3[] lethalZonePoints = new Vector3[4] {
+                new Vector3(_lethalBorder.x / 2, _lethalBorder.y / 2, 0),
+                new Vector3(-_lethalBorder.x / 2, _lethalBorder.y / 2, 0),
+                new Vector3(-_lethalBorder.x / 2, -_lethalBorder.y / 2, 0),
+                new Vector3(_lethalBorder.x / 2, -_lethalBorder.y / 2, 0)
+            };
+
+                Gizmos.color = Color.red;
+                GizmosDrawRectangle(lethalZonePoints);
+            }
+        }
+
+        #endregion
+    }
+
+}

@@ -6,27 +6,30 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 
-//public delegate void HealthUpdated(int old, int current);
-//public delegate void MoneyUpdated(int old, int current);
+public delegate void HealthUpdated(int old, int current);
+public delegate void MoneyUpdated(int old, int current);
 public class PlayerController : MonoBehaviour
 {
 
     #region Variables
 
     //Public
+    public int health = 1;
+    public int _maxHealth = 1000;
+    public bool isDead = false;
     public bool isPaused { get; private set; } = false;
     
     // Private
 
-    [SerializeField] private Ship _movement;
+    [SerializeField] private Ship.Ship _movement;
     [SerializeField] private AttatchementHandler _attatchement;
     [SerializeField] private PlaySpaceBorder _border;
     [SerializeField] private Camera _camera;
 
-    // Events
-    //public event HealthUpdated OnHealthUpdated;
-    //public event MoneyUpdated OnMoneyUpdated;
-    //public event Action OnKilled;
+    //// Events
+    public event HealthUpdated OnHealthUpdated;
+    public event MoneyUpdated OnMoneyUpdated;
+    public event Action OnKilled;
     public event Action<bool> OnPauseStateUpdated;
 
 
@@ -83,15 +86,15 @@ public class PlayerController : MonoBehaviour
 
     #region Money
 
-    public void SetMoney(int amount) {
-        OnMoneyUpdated?.Invoke(money, amount);
-        money = amount;
-    }
+    //public void SetMoney(int amount) {
+    //    OnMoneyUpdated?.Invoke(money, amount);
+    //    money = amount;
+    //}
 
-    public void AddMoney(int amount) {
-        OnMoneyUpdated?.Invoke(money, money + amount);
-        money += amount;
-    }
+    //public void AddMoney(int amount) {
+    //    OnMoneyUpdated?.Invoke(money, money + amount);
+    //    money += amount;
+    //}
 
     #endregion
 
