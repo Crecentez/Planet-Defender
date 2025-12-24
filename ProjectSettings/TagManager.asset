@@ -9,11 +9,12 @@ TagManager:
   - Enemy
   - Spawner
   - GameState
+  - VirtualCamera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bounds
   - Water
   - UI
   - Enemy

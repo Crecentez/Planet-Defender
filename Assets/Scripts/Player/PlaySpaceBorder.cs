@@ -26,8 +26,8 @@ public class PlaySpaceBorder : MonoBehaviour
     private void Update() {
         if (OutOfBounds()) {
             StartWarning();
-            if (InLethalZone())
-                _controller.Kill();
+            //if (InLethalZone())
+            //    _controller.Kill();
 
         } else StopWarning();
         

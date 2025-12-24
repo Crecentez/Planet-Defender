@@ -14,20 +14,19 @@ public class PlayerController : MonoBehaviour
     #region Variables
 
     //Public
-    public int health { get; private set; } = 1;
-    public int money { get; private set; } = 0;
-    public bool isDead { get; private set; } = false;
+    public int health = 1;
+    public int _maxHealth = 1000;
+    public bool isDead = false;
     public bool isPaused { get; private set; } = false;
     
     // Private
-    [SerializeField] private int _maxHealth = 30;
 
-    [SerializeField] private PlayerMovement _movement;
-    [SerializeField] private AttatchementHandler _attatchement;
+    [SerializeField] private Ship.Ship _movement;
+    //[SerializeField] private AttatchementHandler _attatchement;
     [SerializeField] private PlaySpaceBorder _border;
     [SerializeField] private Camera _camera;
 
-    // Events
+    //// Events
     public event HealthUpdated OnHealthUpdated;
     public event MoneyUpdated OnMoneyUpdated;
     public event Action OnKilled;
@@ -87,15 +86,15 @@ public class PlayerController : MonoBehaviour
 
     #region Money
 
-    public void SetMoney(int amount) {
-        OnMoneyUpdated?.Invoke(money, amount);
-        money = amount;
-    }
+    //public void SetMoney(int amount) {
+    //    OnMoneyUpdated?.Invoke(money, amount);
+    //    money = amount;
+    //}
 
-    public void AddMoney(int amount) {
-        OnMoneyUpdated?.Invoke(money, money + amount);
-        money += amount;
-    }
+    //public void AddMoney(int amount) {
+    //    OnMoneyUpdated?.Invoke(money, money + amount);
+    //    money += amount;
+    //}
 
     #endregion
 
