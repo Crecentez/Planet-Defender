@@ -3,23 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-namespace Ship.Attatchment {
-    public enum AttatchementType {
+namespace Ship.Attachments {
+    public enum AttachmentType {
         NONE,
         Gun,
         Shield
     }   
 
-    public class Attatchement : MonoBehaviour {
+    public class Attachment : MonoBehaviour {
 
         
         #region Variables
 
         [SerializeField] private string _name;
         [SerializeField][TextArea] private string _description;
-        [SerializeField] private AttatchementType _type;
+        [SerializeField] private AttachmentType _type;
 
         #endregion
 
@@ -33,7 +31,7 @@ namespace Ship.Attatchment {
 
         public string GetName() { return _name; }
         public virtual string GetDescription() { return _description; }
-        public AttatchementType GetAttatchementType() { return _type; }
+        public AttachmentType GetAttatchementType() { return _type; }
 
         #endregion
 

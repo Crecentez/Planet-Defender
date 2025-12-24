@@ -1,26 +1,24 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ship.Attatchment {
+namespace Ship.Attachments {
     [Serializable]
-    public class AttatchementConnection {
+    public class AttachmentConnection {
 
         #region Varaibles
 
         public Vector3 offset;
-        public AttatchementType type = AttatchementType.NONE;
+        public AttachmentType type = AttachmentType.NONE;
 
-        [SerializeField] private Attatchement attatchement;
+        [SerializeField] private Attachment attatchement;
 
-        public AttatchementConnection() { attatchement = null; }
+        public AttachmentConnection() { attatchement = null; }
 
         #endregion
 
         #region Methods
 
-        public bool Attatch(Transform transform, Attatchement attatchement) {
+        public bool Attatch(Transform transform, Attachment attatchement) {
             if (IsAvailable(attatchement)) {
                 this.attatchement = attatchement;
                 attatchement.Attatch(transform, offset);
@@ -29,21 +27,22 @@ namespace Ship.Attatchment {
             return false;
         }
 
-        public Attatchement Detatch() {
-            Attatchement a = this.attatchement;
+        public Attachment Detatch() {
+            Attachment a = this.attatchement;
             this.attatchement = null;
             return a;
         }
 
-        public bool IsAvailable(Attatchement attatchement) {
+        public bool IsAvailable(Attachment attatchement) {
             return this.attatchement == null && CompareType(attatchement.GetAttatchementType());
         }
 
-        public bool CompareType(AttatchementType attatchementType) {
-            return type == AttatchementType.NONE || type == attatchementType;
+        public bool CompareType(AttachmentType attatchementType) {
+            return type == AttachmentType.NONE || type == attatchementType;
         }
 
         #endregion
     }
 
 }
+
