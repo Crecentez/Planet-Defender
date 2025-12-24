@@ -73,7 +73,7 @@ namespace Ship.Attachments.Guns {
         private void OnDrawGizmosSelected() {
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(settings.offset, 0.02f);
+            Gizmos.DrawWireSphere(Offset, 0.02f);
         }
 
         #endregion

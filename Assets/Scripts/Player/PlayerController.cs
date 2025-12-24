@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     // Private
 
     [SerializeField] private Ship.Ship _movement;
-    [SerializeField] private AttatchementHandler _attatchement;
+    //[SerializeField] private AttatchementHandler _attatchement;
     [SerializeField] private PlaySpaceBorder _border;
     [SerializeField] private Camera _camera;
 

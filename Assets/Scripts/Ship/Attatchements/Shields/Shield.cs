@@ -10,8 +10,9 @@ namespace Ship.Attachments.Shields {
 
         #region Varaibles
 
-        [SerializeField] protected int _maxHealth = 50;
-        [SerializeField] protected bool _attatchAtCenter = false;
+        [SerializeField] protected int MaxHealth = 50;
+        [SerializeField] protected bool AttatchAtCenter = false;
+        [SerializeField] protected bool EnemyShield = false;
 
         private int _health;
         public event ShieldHealthUpdated OnHealthUpdated;
@@ -21,7 +22,7 @@ namespace Ship.Attachments.Shields {
         #region Methods
 
         public override void Attatch(Transform parent, Vector3 localPosition) {
-            if (_attatchAtCenter) {
+            if (AttatchAtCenter) {
                 transform.parent = parent;
                 transform.position = Vector3.zero;
             } else {
@@ -34,19 +35,19 @@ namespace Ship.Attachments.Shields {
             if (_health < 0) {
                 _health = 0;
             }
-            OnHealthUpdated?.Invoke(_health, _maxHealth);
+            OnHealthUpdated?.Invoke(_health, MaxHealth);
         }
 
         public void Heal(int amount) {
             _health += amount;
-            if (_health > _maxHealth) _health = _maxHealth;
-            OnHealthUpdated?.Invoke(_health, _maxHealth);
+            if (_health > MaxHealth) _health = MaxHealth;
+            OnHealthUpdated?.Invoke(_health, MaxHealth);
         }
 
         public void SetHealth(int amount) {
             _health = amount;
-            if (_health > _maxHealth) _health = _maxHealth;
-            OnHealthUpdated?.Invoke(_health, _maxHealth);
+            if (_health > MaxHealth) _health = MaxHealth;
+            OnHealthUpdated?.Invoke(_health, MaxHealth);
         }
 
         #endregion
