@@ -2,11 +2,12 @@ using Cinemachine;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Damage;
 
 namespace Ship {
-    public delegate void HealthUpdated(int old, int current);
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collision2D))]
+    [RequireComponent(typeof(Damageable))]
     public class Ship : MonoBehaviour {
 
         #region Veriables
@@ -15,7 +16,6 @@ namespace Ship {
 
 
         // Protected
-        [SerializeField] protected int MaxHealth = 1000;
 
         [Header("Movement")]
         [SerializeField] protected float MaxSpeed = 5f;
@@ -28,15 +28,10 @@ namespace Ship {
 
         // Private
         private Rigidbody2D _rigidbody;
+        private Damageable _damageable;
         private GameInputMap _input;
         private InputAction _moveInput;
         private InputAction _boostInput;
-        private int _health = 0;
-        private bool _isDead = false;
-
-        // Events
-        public event HealthUpdated OnHealthUpdated;
-        public event Action OnKilled;
 
         #endregion
 
@@ -52,7 +47,10 @@ namespace Ship {
             if (!_rigidbody) {
                 Debug.LogWarning("Rigidbody not found on " + gameObject.name);
             }
-            _health = MaxHealth;
+            _damageable = GetComponent<Damageable>();
+            if (!_damageable) {
+                Debug.LogWarning("Damageable not found on " + gameObject.name);
+            }
         }
 
         private void OnEnable() {
@@ -68,7 +66,7 @@ namespace Ship {
         }
 
         private void Update() {
-            if (!IsDead()) {
+            if (!_damageable.IsDead()) {
                 UpdateMovement();
             }
         }
@@ -85,37 +83,8 @@ namespace Ship {
 
         #region Methods
 
-        public void Damage(int damage) {
-            int old = _health;
-            _health -= damage;
-            if (_health < 0) _health = 0;
-            OnHealthUpdated?.Invoke(old, _health);
-            if (_health <= 0) Kill();
-        }
-
-        public void Heal(int heal) {
-            int old = _health;
-            _health += heal;
-            if (_health > MaxHealth) _health = MaxHealth;
-            OnHealthUpdated?.Invoke(old, _health);
-        }
-
-        public void Kill() {
-            if (_isDead) return;
-            Debug.Log("Ship Killed");
-            int old = _health;
-            _health = 0;
-            _isDead = true;
-            OnHealthUpdated?.Invoke(old, _health);
-            OnKilled?.Invoke();
-        }
-
-        public int GetMaxHealth() { return MaxHealth; }
-        public int GetHealth() { return _health; }
-        public bool IsDead() { return _isDead; }
-
         protected void UpdateMovement() {
-            if (IsDead()) return;
+            if (_damageable.IsDead()) return;
             Vector2 input = GetMovementInput();
 
             gameObject.transform.eulerAngles = new Vector3(0, 0, gameObject.transform.eulerAngles.z + SteerSpeed * Time.deltaTime * input.x * -1);

@@ -1,15 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using Damage;
 
 namespace Ship {
     [RequireComponent(typeof(Ship))]
     public class PlayBounds : MonoBehaviour {
+
         #region Variables
+
         [SerializeField] private Vector2 _safeZone = Vector2.zero;
         [SerializeField] private Vector2 _lethalBorder = Vector2.one;
 
         [SerializeField] private GameObject _outOfBoundsWarning;
-        private Ship _ship;
+        private Damageable _damageable;
 
         [SerializeField] private bool _showGizmos = false;
         [SerializeField] private float _flashTime = 1f;
@@ -23,7 +26,7 @@ namespace Ship {
         #region Unity Methods
 
         private void Start() {
-            _ship = GetComponent<Ship>();
+            _damageable = GetComponent<Damageable>();
             if (_outOfBoundsWarning == null) {
                 Debug.LogWarning("OutOfBoundsWarning GameObject not Found!");
                 
@@ -92,7 +95,7 @@ namespace Ship {
         private IEnumerator KillTimer() {
             yield return new WaitForSeconds(_killTime);
             if (OutOfBounds()) {
-                _ship.Kill();
+                _damageable.Kill();
             }
         }
 

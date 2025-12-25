@@ -1,9 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Damage;
 
+[RequireComponent(typeof(Damageable))]
 public class Planet : MonoBehaviour
 {
 

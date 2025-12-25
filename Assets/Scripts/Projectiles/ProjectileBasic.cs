@@ -1,72 +1,56 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Damage;
+using Ship.Attachments.Shields;
 using UnityEngine;
 
-public class ProjectileBasic : Projectile
-{
+namespace Projectile {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D))]
+    public class ProjectileBasic : Projectile {
 
-    #region Classes 
 
-    [Serializable]
-    public class Settings_Class {
-        public float speed = 5f;
-        public float lifeTime = 3f;
-        public int damage = 4;
-        public float knockback = 1f;
+        #region Variables
 
-        public Settings_Class() { }
-    }
+        // Private
+        [SerializeField] private float speed = 5f;
+        [SerializeField] private int hitDamage = 4;
+        [SerializeField] private float knockback = 1f;
 
-    #endregion
+        private Rigidbody2D rb;
 
-    #region Variables
+        #endregion
 
-    public Settings_Class settings;
+        #region Unity Methods
 
-    private Rigidbody2D rb;
-    //private Planet planet;
+        private void Start() {
 
-    #endregion
+            rb = GetComponent<Rigidbody2D>();
+            //GameObject planet_gm = GameObject.FindGameObjectWithTag("Planet");
+            //if (planet_gm != null) {
+            //    planet = planet_gm.GetComponent<Planet>();
+            //} else {
+            //    Debug.LogWarning("Planet not found!");
+            //    Destroy(gameObject);
+            //}
 
-    #region Unity Methods
-
-    private void Start() {
-        
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null ) {
-            Debug.LogWarning("RigidBody2D not found!");
-            Destroy(gameObject);
+            rb.linearVelocity = new Vector2(transform.up.x, transform.up.y) * speed;
+            StartLifeTimer();
         }
-        //GameObject planet_gm = GameObject.FindGameObjectWithTag("Planet");
-        //if (planet_gm != null) {
-        //    planet = planet_gm.GetComponent<Planet>();
-        //} else {
-        //    Debug.LogWarning("Planet not found!");
-        //    Destroy(gameObject);
-        //}
 
-        rb.linearVelocity = new Vector2(transform.up.x, transform.up.y) * settings.speed;
-        StartLifeTimer();
-    }
+        private void OnTriggerEnter2D(Collider2D collision) {
+            GameObject gm = collision.gameObject;
+            Damageable _damageable = gm.GetComponent<Damageable>();
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        GameObject gm = collision.gameObject;
-        
-        if (CanDamage(CanDamageTypes.Enemy) && gm.GetComponent<Enemy>()) {
-            ApplyKnockback(gm, settings.knockback * rb.linearVelocity.normalized);
-            Damage(gm.GetComponent<Enemy>(), settings.damage);
-            Destroy(gameObject);
-        } else if (CanDamage(CanDamageTypes.Player) && gm.GetComponent<PlayerController>()) {
-            ApplyKnockback(gm, settings.knockback * rb.linearVelocity.normalized);
-            Damage(gm.GetComponent<PlayerController>(), settings.damage);
-            Destroy(gameObject);
-        } else if (CanDamage(CanDamageTypes.Planet) && gm.GetComponent<Planet>()) {
-            Damage(gm.GetComponent<Planet>(), settings.damage);
-            Destroy(gameObject);
+            if (!_damageable) { return; }
+            if (CanDamage(_damageable)) {
+                if (gm.GetComponent<Enemy>() || gm.GetComponent<Ship.Ship>()) 
+                    ApplyKnockback(gm, knockback * rb.linearVelocity.normalized);
+                
+                _damageable.Damage(hitDamage);
+                Destroy(gameObject);
+            }
         }
+
+        #endregion
+
     }
-
-    #endregion
-
 }
