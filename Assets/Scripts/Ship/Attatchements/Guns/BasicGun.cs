@@ -1,15 +1,15 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Ship.Attachments.Guns {
-    public class BasicGun : Attachment {
+
+    public class BasicGun : Gun {
 
         #region Variables
 
+        [Header("Gun-Specific Settings")]
         [SerializeField] private float FireRate = 0.5f;
         [SerializeField] private Vector2 Offset = Vector2.zero;
         [Tooltip("In Degrees")][SerializeField]
@@ -17,27 +17,17 @@ namespace Ship.Attachments.Guns {
         [SerializeField] private GameObject BulletPrefab;
 
         // Private
-        private GameInputMap _input;
-        private InputAction _fireInput;
         private bool _canFire = false;
 
         #endregion
 
         #region Unity Methods
 
-        private void OnEnable() {
-            _input = new GameInputMap();
-            _input.Gun.Enable();
-            _fireInput = _input.Gun.Fire;
+        protected override void OnEnable() {
+            base.OnEnable();
+
             _canFire = true;
         }
-
-        private void OnDisable() {
-            _input.Gun.Disable();
-            _input = null;
-            _canFire = false;
-        }
-
 
         private void Update() {
             if (_canFire && _fireInput.IsPressed()) {
@@ -55,8 +45,6 @@ namespace Ship.Attachments.Guns {
 
                 GameObject b = Instantiate(BulletPrefab);
 
-                //GameObject player = GameObject.FindWithTag("Player");
-                //player.GetComponent<Rigidbody2D>().AddForce(player.transform.up * b.GetComponent<Projectile>().PlayerKnockback * -1);
                 b.transform.position = transform.position + (transform.up * Offset.y) + (transform.right * Offset.x);
                 b.transform.rotation = new quaternion(transform.rotation.x + (Mathf.Deg2Rad * Rotation), transform.rotation.y, transform.rotation.z, transform.rotation.w);
 

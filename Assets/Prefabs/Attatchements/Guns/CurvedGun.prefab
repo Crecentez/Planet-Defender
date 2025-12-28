@@ -48,11 +48,11 @@ MonoBehaviour:
   _name: Curved Gun
   _description: Shoots Wavy Bullets
   _type: 1
-  settings:
-    fireRate: 0.3
-    offset: {x: 0, y: 0.05}
-    rotation: 0
-  _bulletPrefab: {fileID: 7917688255547569854, guid: acadb0eef683ba3428592746da023546, type: 3}
+  InputActions: {fileID: -944628639613478452, guid: 9cfadddc8de8451499a1f4ffb8a3d18d, type: 3}
+  FireRate: 0.1
+  Offset: {x: 0, y: 0}
+  Rotation: 0
+  BulletPrefab: {fileID: 7917688255547569854, guid: acadb0eef683ba3428592746da023546, type: 3}
 --- !u!1 &5628950409534378839
 GameObject:
   m_ObjectHideFlags: 0

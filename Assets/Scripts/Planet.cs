@@ -22,23 +22,19 @@ public class Planet : MonoBehaviour
 
     #region Variables
 
-    // Public
-    
-
-    // Protected
-    [SerializeField] protected int MaxHealth = 20000;
     [SerializeField] protected OrbitSettings_Class OrbitSettings = new OrbitSettings_Class();
     [SerializeField] protected List<Turret> Turrets = new List<Turret>();
 
-    // Private
     private int _health = 1;
+    private Damageable _damageable;
 
     #endregion
 
     #region Unity Methods
 
     private void Start() {
-        _health = MaxHealth;
+        _damageable = GetComponent<Damageable>();
+        _damageable.OnKilled += OnKilled;
     }
 
     #endregion
@@ -53,14 +49,8 @@ public class Planet : MonoBehaviour
         UpdateTurretPosition();
     }
 
-    public void Damage(int amount) {
-        _health -= amount;
-        if (_health < 0) {
-            BlowUp();
-        }
-    }
-
-    public void BlowUp() {
+    public void OnKilled() {
+        Debug.Log("Restarting scene...");
         Invoke("RestartGame", 3);
     }
 

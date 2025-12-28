@@ -12,9 +12,10 @@ namespace Ship.Attachments {
 
     public class Attachment : MonoBehaviour {
 
-        
+
         #region Variables
 
+        [Header("Attachment Settings")]
         [SerializeField] private string _name;
         [SerializeField][TextArea] private string _description;
         [SerializeField] private AttachmentType _type;

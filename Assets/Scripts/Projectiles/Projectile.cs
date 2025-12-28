@@ -19,7 +19,7 @@ namespace Projectile {
         [EnumFlags] public CanDamageTypes canDamageTypes = CanDamageTypes.Enemy;
 
         [SerializeField][Tooltip("Value of -1 will result in infinite lifespan")]
-        private const float LIFE_TIME = 8f;
+        private float LifeTime = 8f;
 
         #endregion
 
@@ -34,8 +34,8 @@ namespace Projectile {
         #region Methods
 
         protected void StartLifeTimer() {
-            if (LIFE_TIME >= 0)
-                StartCoroutine(LifeTimeTimer(LIFE_TIME));
+            if (LifeTime >= 0)
+                StartCoroutine(LifeTimeTimer(LifeTime));
         }
         protected void StartLifeTimer(float lifeTime) {
             StartCoroutine(LifeTimeTimer(lifeTime));

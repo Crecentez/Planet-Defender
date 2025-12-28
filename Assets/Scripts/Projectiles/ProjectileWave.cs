@@ -21,7 +21,6 @@ namespace Projectile {
         private float timePassed = 0f;
 
         private Rigidbody2D rb;
-        //private Planet planet;
 
         #endregion
 
@@ -31,7 +30,7 @@ namespace Projectile {
             position = transform.position;
             moveDir = transform.up;
             rightDir = transform.right;
-            timePassed += (Random.Range(0, 2) * Mathf.PI) / waveLength;
+            timePassed += (Random.Range(0, 20) / 10 * Mathf.PI) / waveLength;
             StartLifeTimer();
         }
 

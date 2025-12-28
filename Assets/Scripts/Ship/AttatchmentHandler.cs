@@ -10,9 +10,8 @@ namespace Ship {
 
         // Private
 
-
         [SerializeField] private List<AttachmentConnection> Attachments = new();
-        private const float GizmosSize = 0.1f;
+        private const float GizmosSize = 0.02f;
 
         #endregion
 
@@ -22,7 +21,7 @@ namespace Ship {
 
             Attachment a = prefab.GetComponent<Attachment>();
             if (a == null) {
-                Debug.LogWarning("Attachment Prefab did not contain a Attachment Component!");
+                Debug.LogWarning("Attachment Prefab (" + prefab.name + ") did not contain a Attachment Component!");
                 return null;
             }
 

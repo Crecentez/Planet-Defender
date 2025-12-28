@@ -1,13 +1,17 @@
 using Cinemachine;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Damage;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 namespace Ship {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collision2D))]
     [RequireComponent(typeof(Damageable))]
+    //[RequireComponent(typeof(EventSystem))]
+    //[RequireComponent(typeof(InputSystemUIInputModule))]
+    //[RequireComponent(typeof(PlayerInput))]
     public class Ship : MonoBehaviour {
 
         #region Veriables
@@ -16,6 +20,8 @@ namespace Ship {
 
 
         // Protected
+        [Header("Input")]
+        [SerializeField] private InputActionAsset InputActions;
 
         [Header("Movement")]
         [SerializeField] protected float MaxSpeed = 5f;
@@ -29,13 +35,24 @@ namespace Ship {
         // Private
         private Rigidbody2D _rigidbody;
         private Damageable _damageable;
-        private GameInputMap _input;
+        //private GameInputMap _input;
         private InputAction _moveInput;
         private InputAction _boostInput;
 
         #endregion
 
         #region Unity Methods
+
+        private void Awake() {
+            if (!InputActions) {
+                Debug.LogError(gameObject.name + " does not have a InputActionAsset assigned!");
+                return;
+            }
+
+            InputActionMap playerInputMap = InputActions.FindActionMap("Player");
+            _moveInput = playerInputMap.FindAction("Move");
+            _boostInput = playerInputMap.FindAction("Boost");
+        }
 
         private void Start() {
             GameObject vc = GameObject.FindGameObjectWithTag("VirtualCamera");
@@ -54,15 +71,19 @@ namespace Ship {
         }
 
         private void OnEnable() {
-            _input = new GameInputMap();
-            _input.Player.Enable();
-            _moveInput = _input.Player.Move;
-            _boostInput = _input.Player.Boost;
+            //_input = new GameInputMap();
+            //_input.Player.Enable();
+            //_moveInput = _input.Player.Move;
+            //_boostInput = _input.Player.Boost;
+            _moveInput.Enable();
+            _boostInput.Enable();
         }
 
         private void OnDisable() {
-            _input.Player.Disable();
-            _input = null;
+            //_input.Player.Disable();
+            //_input = null;
+            _moveInput.Disable();
+            _boostInput.Disable();
         }
 
         private void Update() {

@@ -50,14 +50,14 @@ MonoBehaviour:
   _name: Laser Gun
   _description: Shoots a constant laser
   _type: 1
-  _damage: 10
-  _damageSpeed: 0.1
-  _maxRange: 8
-  _offset: {x: 0, y: 0}
-  _mask:
+  InputActions: {fileID: -944628639613478452, guid: 9cfadddc8de8451499a1f4ffb8a3d18d, type: 3}
+  Damage: 3
+  DamageSpeed: 0.02
+  MaxRange: 15
+  Offset: {x: 0, y: 0}
+  Mask:
     serializedVersion: 2
-    m_Bits: 320
-  _lineRenderer: {fileID: 4105401126310348305}
+    m_Bits: 4294967295
 --- !u!120 &4105401126310348305
 LineRenderer:
   serializedVersion: 2
@@ -113,14 +113,23 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.11958608
+        time: 0.26710603
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.08104396
+        outSlope: -0.08104396
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.5287313
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -4.039674
+        outSlope: -4.039674
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.18870088
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

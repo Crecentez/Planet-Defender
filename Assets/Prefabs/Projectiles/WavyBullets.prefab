@@ -182,7 +182,6 @@ GameObject:
   m_Component:
   - component: {fileID: 523827849077385798}
   - component: {fileID: 2020248754280993493}
-  - component: {fileID: 7089483583889467922}
   - component: {fileID: 4299283002041543165}
   - component: {fileID: 140214518078076218}
   - component: {fileID: 6613022880159626582}
@@ -222,31 +221,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDamageTypes: 1
-  settings:
-    speed: 3
-    waveIntensity: 0.3
-    waveLength: 10
-    lifeTime: 3
-    damage: 25
-    knockback: 1
---- !u!114 &7089483583889467922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7917688255547569854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 471773119b742ca4eb0e60f735c2d2fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDamageTypes: 1
-  settings:
-    speed: 5
-    lifeTime: 3
-    damage: 10
-    knockback: 1
+  LifeTime: 8
+  speed: 5
+  waveIntensity: 0.3
+  waveLength: 8
+  hitDamage: 5
+  knockback: 1
 --- !u!50 &4299283002041543165
 Rigidbody2D:
   serializedVersion: 5

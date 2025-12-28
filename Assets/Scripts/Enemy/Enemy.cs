@@ -52,6 +52,6 @@ public class Enemy : MonoBehaviour
     }
 
     protected void DoDamage(Planet planet, int amount) {
-        planet.Damage(amount);
+        //planet.Damage(amount);
     }
 }
