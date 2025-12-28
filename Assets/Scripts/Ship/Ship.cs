@@ -1,12 +1,17 @@
 using Cinemachine;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Damage;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 namespace Ship {
-    public delegate void HealthUpdated(int old, int current);
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collision2D))]
+    [RequireComponent(typeof(Damageable))]
+    //[RequireComponent(typeof(EventSystem))]
+    //[RequireComponent(typeof(InputSystemUIInputModule))]
+    //[RequireComponent(typeof(PlayerInput))]
     public class Ship : MonoBehaviour {
 
         #region Veriables
@@ -15,7 +20,8 @@ namespace Ship {
 
 
         // Protected
-        [SerializeField] protected int MaxHealth = 1000;
+        [Header("Input")]
+        [SerializeField] private InputActionAsset InputActions;
 
         [Header("Movement")]
         [SerializeField] protected float MaxSpeed = 5f;
@@ -28,19 +34,25 @@ namespace Ship {
 
         // Private
         private Rigidbody2D _rigidbody;
-        private GameInputMap _input;
+        private Damageable _damageable;
+        //private GameInputMap _input;
         private InputAction _moveInput;
         private InputAction _boostInput;
-        private int _health = 0;
-        private bool _isDead = false;
-
-        // Events
-        public event HealthUpdated OnHealthUpdated;
-        public event Action OnKilled;
 
         #endregion
 
         #region Unity Methods
+
+        private void Awake() {
+            if (!InputActions) {
+                Debug.LogError(gameObject.name + " does not have a InputActionAsset assigned!");
+                return;
+            }
+
+            InputActionMap playerInputMap = InputActions.FindActionMap("Player");
+            _moveInput = playerInputMap.FindAction("Move");
+            _boostInput = playerInputMap.FindAction("Boost");
+        }
 
         private void Start() {
             GameObject vc = GameObject.FindGameObjectWithTag("VirtualCamera");
@@ -52,23 +64,30 @@ namespace Ship {
             if (!_rigidbody) {
                 Debug.LogWarning("Rigidbody not found on " + gameObject.name);
             }
-            _health = MaxHealth;
+            _damageable = GetComponent<Damageable>();
+            if (!_damageable) {
+                Debug.LogWarning("Damageable not found on " + gameObject.name);
+            }
         }
 
         private void OnEnable() {
-            _input = new GameInputMap();
-            _input.Player.Enable();
-            _moveInput = _input.Player.Move;
-            _boostInput = _input.Player.Boost;
+            //_input = new GameInputMap();
+            //_input.Player.Enable();
+            //_moveInput = _input.Player.Move;
+            //_boostInput = _input.Player.Boost;
+            _moveInput.Enable();
+            _boostInput.Enable();
         }
 
         private void OnDisable() {
-            _input.Player.Disable();
-            _input = null;
+            //_input.Player.Disable();
+            //_input = null;
+            _moveInput.Disable();
+            _boostInput.Disable();
         }
 
         private void Update() {
-            if (!IsDead()) {
+            if (!_damageable.IsDead()) {
                 UpdateMovement();
             }
         }
@@ -85,37 +104,8 @@ namespace Ship {
 
         #region Methods
 
-        public void Damage(int damage) {
-            int old = _health;
-            _health -= damage;
-            if (_health < 0) _health = 0;
-            OnHealthUpdated?.Invoke(old, _health);
-            if (_health <= 0) Kill();
-        }
-
-        public void Heal(int heal) {
-            int old = _health;
-            _health += heal;
-            if (_health > MaxHealth) _health = MaxHealth;
-            OnHealthUpdated?.Invoke(old, _health);
-        }
-
-        public void Kill() {
-            if (_isDead) return;
-            Debug.Log("Ship Killed");
-            int old = _health;
-            _health = 0;
-            _isDead = true;
-            OnHealthUpdated?.Invoke(old, _health);
-            OnKilled?.Invoke();
-        }
-
-        public int GetMaxHealth() { return MaxHealth; }
-        public int GetHealth() { return _health; }
-        public bool IsDead() { return _isDead; }
-
         protected void UpdateMovement() {
-            if (IsDead()) return;
+            if (_damageable.IsDead()) return;
             Vector2 input = GetMovementInput();
 
             gameObject.transform.eulerAngles = new Vector3(0, 0, gameObject.transform.eulerAngles.z + SteerSpeed * Time.deltaTime * input.x * -1);

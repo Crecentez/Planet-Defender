@@ -1,21 +1,16 @@
-using System;
-using System.Net.Mail;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Damage;
 
 namespace Ship.Attachments.Shields {
 
-    public delegate void ShieldHealthUpdated(int current, int maxHealth);
+    [RequireComponent(typeof(Damageable))]
     public class Shield : Attachment {
 
         #region Varaibles
 
-        [SerializeField] protected int MaxHealth = 50;
         [SerializeField] protected bool AttatchAtCenter = false;
-        [SerializeField] protected bool EnemyShield = false;
+        public bool EnemyShield { get; protected set; } = false;
 
-        private int _health;
-        public event ShieldHealthUpdated OnHealthUpdated;
 
         #endregion
 
@@ -30,25 +25,6 @@ namespace Ship.Attachments.Shields {
             }
         }
 
-        public void Damage(int amount) {
-            _health -= amount;
-            if (_health < 0) {
-                _health = 0;
-            }
-            OnHealthUpdated?.Invoke(_health, MaxHealth);
-        }
-
-        public void Heal(int amount) {
-            _health += amount;
-            if (_health > MaxHealth) _health = MaxHealth;
-            OnHealthUpdated?.Invoke(_health, MaxHealth);
-        }
-
-        public void SetHealth(int amount) {
-            _health = amount;
-            if (_health > MaxHealth) _health = MaxHealth;
-            OnHealthUpdated?.Invoke(_health, MaxHealth);
-        }
 
         #endregion
 

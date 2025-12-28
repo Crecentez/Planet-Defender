@@ -36,7 +36,7 @@ public class Enemy_Projectile : MonoBehaviour
 
         } else if (collision.gameObject.tag == "Planet") {
             Planet planet = collision.gameObject.GetComponent<Planet>();
-            planet.Damage(Mathf.FloorToInt(Damage * enemy.planetDamageScale));
+            //planet.Damage(Mathf.FloorToInt(Damage * enemy.planetDamageScale));
             Destroy(gameObject);
         }
     }

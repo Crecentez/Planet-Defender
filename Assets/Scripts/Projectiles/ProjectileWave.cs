@@ -1,86 +1,71 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Damage;
 
-public class ProjectileWave : Projectile
-{
+namespace Projectile {
+    public class ProjectileWave : Projectile {
 
-    #region Classes 
 
-    [Serializable]
-    public class Settings_Class {
-        public float speed = 5f;
-        public float waveIntensity = 1f;
-        public float waveLength = 1f;
-        public float lifeTime = 3f;
-        public int damage = 4;
-        public float knockback = 1f;
+        #region Variables
 
-        public Settings_Class() { }
-    }
+        [SerializeField] private float speed = 5f;
+        [SerializeField] private float waveIntensity = 1f;
+        [SerializeField] private float waveLength = 1f;
+        [SerializeField] private int hitDamage = 4;
+        [SerializeField] private float knockback = 1f;
 
-    #endregion
+        private Vector3 moveDir;
+        private Vector3 rightDir;
+        private Vector3 position;
+        private float timePassed = 0f;
 
-    #region Variables
+        private Rigidbody2D rb;
 
-    public Settings_Class settings;
+        #endregion
 
-    private Vector3 moveDir;
-    private Vector3 rightDir;
-    private Vector3 position;
-    private float timePassed = 0f;
+        #region Unity Methods
 
-    private Rigidbody2D rb;
-    //private Planet planet;
-
-    #endregion
-
-    #region Unity Methods
-
-    private void Start() {
-        position = transform.position;
-        moveDir = transform.up;
-        rightDir = transform.right;
-        timePassed += (Random.Range(0, 2) * Mathf.PI) / settings.waveLength;
-        StartLifeTimer();
-    }
-
-    public void Update() {
-        position += moveDir * Time.deltaTime * settings.speed;
-        Vector3 sideUpdate = rightDir * (float)GetOffset(Time.deltaTime);
-        transform.position = position + sideUpdate;
-        //gameObject.transform.position = transform.position + (moveDir * settings.speed * Time.deltaTime) + (rightDir * (float)GetOffset(Time.deltaTime));
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) {
-        GameObject gm = collision.gameObject;
-        
-        if (CanDamage(CanDamageTypes.Enemy) && gm.GetComponent<Enemy>()) {
-            ApplyKnockback(gm, (gm.transform.position - transform.position) * settings.speed * settings.knockback);
-            Damage(gm.GetComponent<Enemy>(), settings.damage);
-            Destroy(gameObject);
-        } else if (CanDamage(CanDamageTypes.Player) && gm.GetComponent<PlayerController>()) {
-            ApplyKnockback(gm, settings.knockback * rb.linearVelocity.normalized);
-            Damage(gm.GetComponent<PlayerController>(), settings.damage);
-            Destroy(gameObject);
-        } else if (gm.GetComponent<Planet>()) {
-            if (CanDamage(CanDamageTypes.Planet))
-                Damage(gm.GetComponent<Planet>(), settings.damage);
-            Destroy(gameObject);
+        private void Start() {
+            position = transform.position;
+            moveDir = transform.up;
+            rightDir = transform.right;
+            timePassed += (Random.Range(0, 20) / 10 * Mathf.PI) / waveLength;
+            StartLifeTimer();
         }
+
+        public void Update() {
+            position += moveDir * Time.deltaTime * speed;
+            Vector3 sideUpdate = rightDir * (float)GetOffset(Time.deltaTime);
+            transform.position = position + sideUpdate;
+            //gameObject.transform.position = transform.position + (moveDir * settings.speed * Time.deltaTime) + (rightDir * (float)GetOffset(Time.deltaTime));
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision) {
+            GameObject gm = collision.gameObject;
+            Damageable _damageable = gm.GetComponent<Damageable>();
+
+            if (!_damageable) { return; }
+            if (CanDamage(_damageable)) {
+                if (gm.GetComponent<Enemy>() || gm.GetComponent<Ship.Ship>())
+                    ApplyKnockback(gm, knockback * rb.linearVelocity.normalized);
+
+                _damageable.Damage(hitDamage);
+                Destroy(gameObject);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private double GetOffset(float dt) {
+            timePassed += dt;
+            return waveIntensity * Math.Sin(waveLength * timePassed);
+        }
+
+        #endregion
+
     }
-
-    #endregion
-
-    #region Methods
-
-    private double GetOffset(float dt) {
-        timePassed += dt;
-        return settings.waveIntensity * Math.Sin(settings.waveLength * timePassed);
-    }
-
-    #endregion
 
 }

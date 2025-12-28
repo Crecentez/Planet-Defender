@@ -1,15 +1,17 @@
 using System.Collections;
 using UnityEngine;
+using Damage;
 
 namespace Ship {
-    [RequireComponent(typeof(Ship))]
+
     public class PlayBounds : MonoBehaviour {
+
         #region Variables
-        [SerializeField] private Vector2 _safeZone = Vector2.zero;
+
+        //[SerializeField] private Vector2 _safeZone = Vector2.zero;
         [SerializeField] private Vector2 _lethalBorder = Vector2.one;
 
         [SerializeField] private GameObject _outOfBoundsWarning;
-        private Ship _ship;
 
         [SerializeField] private bool _showGizmos = false;
         [SerializeField] private float _flashTime = 1f;
@@ -23,7 +25,6 @@ namespace Ship {
         #region Unity Methods
 
         private void Start() {
-            _ship = GetComponent<Ship>();
             if (_outOfBoundsWarning == null) {
                 Debug.LogWarning("OutOfBoundsWarning GameObject not Found!");
                 
@@ -31,12 +32,16 @@ namespace Ship {
         }
 
         private void Update() {
-            if (OutOfBounds()) {
-                StartWarning();
-                //if (InLethalZone())
-                //    _ship.Kill();   
+            GameObject ship = GameObject.FindGameObjectWithTag("Player");
+            if (ship) {
+                if (InLethalZone(ship)) {
+                    StartWarning();
+                    //if (InLethalZone())
+                    //    _ship.Kill();   
 
-            } else StopWarning();
+                } else StopWarning();
+            }
+            
 
         }
 
@@ -91,20 +96,22 @@ namespace Ship {
 
         private IEnumerator KillTimer() {
             yield return new WaitForSeconds(_killTime);
-            if (OutOfBounds()) {
-                _ship.Kill();
+            GameObject ship = GameObject.FindGameObjectWithTag("Player");
+            if (ship && InLethalZone(ship)) {
+                Damageable damageable = ship.GetComponent<Damageable>();
+                damageable.Kill();
             }
         }
 
-        private bool OutOfBounds() {
-            bool oobX = transform.position.x > (_safeZone.x / 2) || transform.position.x < -(_safeZone.x / 2);
-            bool oobY = transform.position.y > (_safeZone.y / 2) || transform.position.y < -(_safeZone.y / 2);
-            return oobX || oobY;
-        }
+        //private bool OutOfBounds(GameObject gm) {
+        //    bool oobX = gm.transform.position.x > (_safeZone.x / 2) || gm.transform.position.x < -(_safeZone.x / 2);
+        //    bool oobY = gm.transform.position.y > (_safeZone.y / 2) || gm.transform.position.y < -(_safeZone.y / 2);
+        //    return oobX || oobY;
+        //}
 
-        private bool InLethalZone() {
-            bool oobX = transform.position.x > (_lethalBorder.x / 2) || transform.position.x < -(_lethalBorder.x / 2);
-            bool oobY = transform.position.y > (_lethalBorder.y / 2) || transform.position.y < -(_lethalBorder.y / 2);
+        private bool InLethalZone(GameObject gm) {
+            bool oobX = gm.transform.position.x > (_lethalBorder.x / 2) || gm.transform.position.x < -(_lethalBorder.x / 2);
+            bool oobY = gm.transform.position.y > (_lethalBorder.y / 2) || gm.transform.position.y < -(_lethalBorder.y / 2);
             return oobX || oobY;
         }
 
@@ -123,16 +130,17 @@ namespace Ship {
         private void OnDrawGizmos() {
             if (_showGizmos) {
 
-                Vector3[] safeZonePoints = new Vector3[4] {
-                new Vector3(_safeZone.x / 2, _safeZone.y / 2, 0),
-                new Vector3(-_safeZone.x / 2, _safeZone.y / 2, 0),
-                new Vector3(-_safeZone.x / 2, -_safeZone.y / 2, 0),
-                new Vector3(_safeZone.x / 2, -_safeZone.y / 2, 0)
-            };
+                // Safe Zone
+            //    Vector3[] safeZonePoints = new Vector3[4] {
+            //    new Vector3(_safeZone.x / 2, _safeZone.y / 2, 0),
+            //    new Vector3(-_safeZone.x / 2, _safeZone.y / 2, 0),
+            //    new Vector3(-_safeZone.x / 2, -_safeZone.y / 2, 0),
+            //    new Vector3(_safeZone.x / 2, -_safeZone.y / 2, 0)
+            //};
+            //    Gizmos.color = Color.yellow;
+            //    GizmosDrawRectangle(safeZonePoints);
 
-                Gizmos.color = Color.yellow;
-                GizmosDrawRectangle(safeZonePoints);
-
+                // Lethal Zone
                 Vector3[] lethalZonePoints = new Vector3[4] {
                 new Vector3(_lethalBorder.x / 2, _lethalBorder.y / 2, 0),
                 new Vector3(-_lethalBorder.x / 2, _lethalBorder.y / 2, 0),

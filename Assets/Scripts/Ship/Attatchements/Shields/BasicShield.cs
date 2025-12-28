@@ -24,7 +24,7 @@ namespace Ship.Attachments.Shields {
             _input = new GameInputMap();
             _input.Shield.Enable();
             _regenInput = _input.Shield.Regenerate;
-            SetHealth(MaxHealth);
+            //SetHealth(MaxHealth);
             _isHealing = false;
         }
 
@@ -41,17 +41,17 @@ namespace Ship.Attachments.Shields {
         }
 
         private void FixedUpdate() {
-            if (_isHealing) {
-                _regenHealth += RegenRate * Time.fixedDeltaTime;
-                if (_regenHealth >= MaxHealth) {
-                    _regenHealth = MaxHealth;
-                    SetHealth(MaxHealth);
-                    _isHealing = false;
-                } else {
-                    Heal(Mathf.CeilToInt(_regenHealth));
-                }
+            //if (_isHealing) {
+            //    _regenHealth += RegenRate * Time.fixedDeltaTime;
+            //    if (_regenHealth >= MaxHealth) {
+            //        _regenHealth = MaxHealth;
+            //        SetHealth(MaxHealth);
+            //        _isHealing = false;
+            //    } else {
+            //        Heal(Mathf.CeilToInt(_regenHealth));
+            //    }
 
-            }
+            //}
         }
 
         #endregion

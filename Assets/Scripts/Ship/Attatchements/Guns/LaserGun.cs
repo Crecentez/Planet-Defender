@@ -1,52 +1,47 @@
 using System.Collections;
-using System.Net.Mail;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace Ship.Attachments.Guns {
-    public class LaserGun : Attachment {
+    [RequireComponent(typeof(LineRenderer))]
+    public class LaserGun : Gun {
 
         #region Variables
 
+        [Header("Gun-Specific Settings")]
         [SerializeField] private int Damage = 3;
         [SerializeField] private float DamageSpeed = 0.2f;
         [SerializeField] private float MaxRange = 15f;
         [SerializeField] private Vector2 Offset = Vector2.zero;
         [SerializeField] private LayerMask Mask = -1;
 
-        [SerializeField] private LineRenderer LineRenderer;
+        
 
-        private GameInputMap _input;
-        private InputAction _fireInput;
         private Enemy _enemy;
+        private LineRenderer _lineRenderer;
         private bool _canFire = false;
         private bool _canDamage = false;
 
         #endregion
 
-        private void OnEnable() {
-            _input = new GameInputMap();
-            _input.Gun.Enable();
-            _fireInput = _input.Gun.Fire;
+        #region Unity Methods
+
+        protected override void OnEnable() {
+            base.OnEnable();
+
+            _lineRenderer = GetComponent<LineRenderer>();
+
             _canFire = true;
             _canDamage = true;
-        }
-
-        private void OnDisable() {
-            _input.Gun.Disable();
-            _input = null;
-            _canFire = false;
-            _canDamage = false;
         }
 
         private void Update() {
             if (_canFire) {
                 if (_fireInput.WasPressedThisFrame()) {
-                    LineRenderer.enabled = true;
+                    _lineRenderer.enabled = true;
                 }
                 if (_fireInput.WasReleasedThisFrame()) {
-                    LineRenderer.enabled = false;
+                    _lineRenderer.enabled = false;
                 }
 
                 if (_fireInput.IsPressed()) {
@@ -57,9 +52,13 @@ namespace Ship.Attachments.Guns {
                 }
 
             } else {
-                LineRenderer.enabled = false;
+                _lineRenderer.enabled = false;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         private IEnumerator DoDamage() {
             if (_canDamage && _enemy != null) {
@@ -71,19 +70,21 @@ namespace Ship.Attachments.Guns {
         }
 
         private void UpdateLineRenderer() {
-            if (LineRenderer != null) {
+            if (_lineRenderer != null) {
                 Vector3 startPos = transform.TransformPoint(new Vector3(Offset.x, Offset.y, 0));
-                LineRenderer.SetPosition(0, startPos);
+                _lineRenderer.SetPosition(0, startPos);
                 RaycastHit2D hit = Physics2D.Raycast(startPos, transform.up, MaxRange, Mask.value);
                 if (hit) {
                     Enemy e = hit.collider.gameObject.GetComponent<Enemy>();
                     if (e) _enemy = e;
-                    LineRenderer.SetPosition(1, hit.point);
+                    _lineRenderer.SetPosition(1, hit.point);
                 } else {
                     if (_enemy != null) _enemy = null;
-                    LineRenderer.SetPosition(1, transform.position + transform.up * MaxRange);
+                    _lineRenderer.SetPosition(1, transform.position + transform.up * MaxRange);
                 }
             }
         }
+
+        #endregion
     }
 }

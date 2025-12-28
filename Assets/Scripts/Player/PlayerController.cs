@@ -6,8 +6,8 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 
-public delegate void HealthUpdated(int old, int current);
-public delegate void MoneyUpdated(int old, int current);
+public delegate void _HealthUpdated(int old, int current);
+public delegate void _MoneyUpdated(int old, int current);
 public class PlayerController : MonoBehaviour
 {
 
@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera _camera;
 
     //// Events
-    public event HealthUpdated OnHealthUpdated;
-    public event MoneyUpdated OnMoneyUpdated;
+    public event _HealthUpdated OnHealthUpdated;
+    public event _MoneyUpdated OnMoneyUpdated;
     public event Action OnKilled;
     public event Action<bool> OnPauseStateUpdated;
 
